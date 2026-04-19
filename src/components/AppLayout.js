@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Footer from './Footer';
 
 const studentNav = [
   { path: '/', label: 'Home', icon: '🏠' },
@@ -114,7 +115,9 @@ export default function AppLayout() {
       </div>
 
       {toast && <div className="toast">{toast}</div>}
+      <Footer />
     </div>
+  
   );
 }
 

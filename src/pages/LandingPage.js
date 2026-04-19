@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -92,6 +93,7 @@ export default function LandingPage() {
           </div>
         ))}
       </div>
+    <Footer />
     </div>
   );
 }
