@@ -50,8 +50,12 @@ export default function AccommodationsPage() {
         setUploading(true);
         const formData = new FormData();
         formData.append('image', imageFile);
+        const token = localStorage.getItem('sib_token');
         const uploadRes = await axios.post('/api/upload/accommodation', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`,
+          },
         });
         image_url = uploadRes.data.url;
         setUploading(false);
