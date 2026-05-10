@@ -66,16 +66,36 @@ export default function RegisterBuddyPage() {
 
       {/* Generated link */}
       {inviteLink && (
-        <div className="card" style={{ maxWidth: 520, marginBottom: '2rem', background: 'var(--teal-light)', borderColor: '#9FE1CB' }}>
-          <div style={{ fontWeight: 500, color: 'var(--teal)', marginBottom: 8, fontSize: 14 }}>
+        <div className="card" style={{ maxWidth: 520, marginBottom: '2rem', background: 'var(--green-light)', borderColor: '#9FE1CB' }}>
+          <div style={{ fontWeight: 700, color: 'var(--green)', marginBottom: 10, fontSize: 14 }}>
             ✅ Invite link generated — share this with the buddy:
           </div>
-          <div style={{ background: '#fff', border: '1px solid #9FE1CB', borderRadius: 8, padding: '10px 12px', fontSize: 12, wordBreak: 'break-all', color: 'var(--text-muted)', marginBottom: 10 }}>
+
+          {/* Clickable link */}
+          <a href={inviteLink} target="_blank" rel="noreferrer"
+            style={{ display: 'block', background: '#fff', border: '1.5px solid #9FE1CB', borderRadius: 10, padding: '10px 14px', fontSize: 12, wordBreak: 'break-all', color: 'var(--green)', marginBottom: 12, textDecoration: 'underline', lineHeight: 1.6 }}>
             {inviteLink}
+          </a>
+
+          {/* Action buttons */}
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            <button className="btn-secondary" style={{ fontSize: 13 }} onClick={copyLink}>
+              📋 Copy Link
+            </button>
+            <a href={`mailto:?subject=Settle-In Buddy Invite&body=You have been invited to join Settle-In Buddy as a buddy! Click the link below to complete your registration:%0A%0A${inviteLink}`}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'transparent', border: '2px solid var(--border-dark)', borderRadius: 50, padding: '9px 18px', fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', textDecoration: 'none', cursor: 'pointer' }}>
+              ✉️ Send via Email
+            </a>
+            <a href={`https://wa.me/?text=You've been invited to join Settle-In Buddy as a buddy! Complete your registration here: ${encodeURIComponent(inviteLink)}`}
+              target="_blank" rel="noreferrer"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#25D366', border: 'none', borderRadius: 50, padding: '9px 18px', fontSize: 13, fontWeight: 600, color: '#fff', textDecoration: 'none', cursor: 'pointer' }}>
+              💬 Send via WhatsApp
+            </a>
           </div>
-          <button className="btn-primary" style={{ fontSize: 13 }} onClick={copyLink}>
-            Copy Link
-          </button>
+
+          <p style={{ fontSize: 12, color: 'var(--green)', marginTop: 10, opacity: 0.8 }}>
+            ⏳ This link is single-use and expires once the buddy registers.
+          </p>
         </div>
       )}
 
