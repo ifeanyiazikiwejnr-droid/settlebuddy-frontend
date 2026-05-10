@@ -9,12 +9,14 @@ const studentNav = [
   { path: '/transport', label: 'Transport', icon: '🚌' },
   { path: '/buddy', label: 'Find a Buddy', icon: '🤝' },
   { path: '/jobs', label: 'Jobs', icon: '💼' },
+  { path: '/chat', label: 'Messages', icon: '💬' },
   { path: '/how-it-works', label: 'How it Works', icon: '❓' },
 ];
 const buddyNav = [
   { path: '/', label: 'Home', icon: '🏠' },
   { path: '/my-profile', label: 'My Profile', icon: '👤' },
   { path: '/my-requests', label: 'Requests', icon: '📬' },
+  { path: '/chat', label: 'Messages', icon: '💬' },
 ];
 const adminNav = [
   { path: '/', label: 'Dashboard', icon: '🏠' },
