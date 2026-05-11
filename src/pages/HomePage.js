@@ -1,5 +1,7 @@
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import axios from 'axios';
 
 const studentLinks = [
   { path: '/accommodations', icon: '🏡', label: 'Accommodations', desc: 'Find your perfect home', color: '#0a5c44', bg: 'linear-gradient(135deg,#0a5c44,#0f7a5a)', img: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=70' },
@@ -23,6 +25,15 @@ const adminLinks = [
 export default function HomePage() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [matches, setMatches] = useState([]);
+
+  useEffect(() => {
+    if (user?.role === 'buddy') {
+      axios.get('/api/buddies/my-matches')
+        .then(res => setMatches(res.data))
+        .catch(() => {});
+    }
+  }, [user]);
 
   const quickLinks = user?.role === 'buddy' ? buddyLinks
     : user?.role === 'admin' ? adminLinks
@@ -80,7 +91,72 @@ export default function HomePage() {
           ))}
         </div>
       </div>
+      
+      {/* Matched Students for Buddy */}
+      {user?.role === 'buddy' && (
+        <div style={{ marginTop: '2rem' }} className="animate-fade-up-delay-2">
+          <div className="section-title">
+            🎓 My Matched Students
+            <span style={{ background: 'var(--green-light)', color: 'var(--green)', fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20 }}>
+              {matches.length}
+            </span>
+          </div>
 
+          {matches.length === 0 ? (
+            <div className="card" style={{ textAlign: 'center', padding: '2.5rem' }}>
+              <div style={{ fontSize: '2.5rem', marginBottom: 10 }}>🎓</div>
+              <p style={{ fontWeight: 600, marginBottom: 6 }}>No matches yet</p>
+              <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                Once you accept a student request, they'll appear here.
+              </p>
+            </div>
+          ) : (
+            <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 20, overflow: 'hidden' }}>
+              {matches.map((student, index) => (
+                <div key={student.id} style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 14,
+                  padding: '14px 18px',
+                  borderTop: index === 0 ? 'none' : '1px solid var(--border)',
+                  transition: 'background .15s',
+                }}>
+                  {/* Avatar */}
+                  <div style={{
+                    width: 46, height: 46, borderRadius: '50%',
+                    background: 'linear-gradient(135deg,var(--green),var(--green-mid))',
+                    color: '#fff', display: 'flex', alignItems: 'center',
+                    justifyContent: 'center', fontWeight: 700, fontSize: 16, flexShrink: 0,
+                  }}>
+                    {student.name.charAt(0).toUpperCase()}
+                  </div>
+
+                  {/* Info */}
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 600, fontSize: 14 }}>{student.name}</div>
+                    <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{student.email}</div>
+                    <div style={{ fontSize: 11, color: 'var(--text-faint)', marginTop: 2 }}>
+                      Matched {new Date(student.matched_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    </div>
+                  </div>
+
+                  {/* Active badge */}
+                  <span className="badge badge-green">Active</span>
+
+                  {/* Chat button */}
+                  <button
+                    className="btn-primary"
+                    style={{ padding: '8px 18px', fontSize: 13, flexShrink: 0 }}
+                    onClick={() => navigate('/chat')}>
+                    💬 Chat
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      
       {/* Info strip for students */}
       {user?.role === 'student' && (
         <div style={styles.infoStrip} className="animate-fade-up-delay-2">
