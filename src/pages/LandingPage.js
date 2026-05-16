@@ -99,7 +99,7 @@ export default function LandingPage() {
 
 const styles = {
   screen: {
-    minHeight: '100vh',
+    Height: '100vh',
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
