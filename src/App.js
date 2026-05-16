@@ -14,6 +14,7 @@ import HowItWorksPage from './pages/HowItWorksPage';
 import BuddyProfilePage from './pages/BuddyProfilePage';
 import BuddyRequestsPage from './pages/BuddyRequestsPage';
 import UsersPage from './pages/UsersPage';
+import UserListPage from './pages/UserListPage';
 import ChatPage from './pages/ChatPage';
 import RegisterBuddyPage from './pages/RegisterBuddyPage';
 import BuddyInvitePage from './pages/BuddyInvitePage';
@@ -70,6 +71,11 @@ function AppRoutes() {
         <Route path="users" element={
           <RoleRoute roles={['admin']}>
             <UsersPage />
+          </RoleRoute>
+        } />
+        <Route path="users/:role" element={
+          <RoleRoute roles={['admin']}>
+            <UserListPage />
           </RoleRoute>
         } />
         <Route path="register-buddy" element={
