@@ -233,7 +233,7 @@ const styles = {
     transition: 'all .2s',
   },
   stats: { 
-    display: 'grid', 
+    display: 'row', 
     gridTemplateColumns: 'repeat(2, 1fr)', 
     gap: 16, 
     padding: '20px', 
