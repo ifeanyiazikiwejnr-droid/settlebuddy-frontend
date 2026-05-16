@@ -134,7 +134,7 @@ export default function AccommodationsPage() {
           <hr className="divider" />
           <div className="section-title">➕ Upload New Listing</div>
           <div className="card">
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: 12 }}>
               <div className="form-group"><label>Title *</label><input name="title" value={form.title} onChange={handle} placeholder="e.g. 2-Bed Flat, Erdington" /></div>
               <div className="form-group"><label>Location *</label><input name="location" value={form.location} onChange={handle} placeholder="e.g. Birmingham, B23" /></div>
               <div className="form-group"><label>Monthly Rent (£) *</label><input name="price" type="number" value={form.price} onChange={handle} placeholder="650" /></div>

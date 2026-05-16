@@ -15,31 +15,21 @@ export default function ChatPage() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(true);
   const [disclaimerAgreed, setDisclaimerAgreed] = useState(false);
+  const [showList, setShowList] = useState(true);
   const socketRef = useRef(null);
   const bottomRef = useRef(null);
 
-  // Connect socket
   useEffect(() => {
     const token = localStorage.getItem('sib_token');
     socketRef.current = io(SOCKET_URL, { auth: { token } });
     socketRef.current.on('new_message', (msg) => {
-      setMessages(prev => {
-        if (prev.find(m => m.id === msg.id)) return prev;
-        return [...prev, msg];
-      });
+      setMessages(prev => prev.find(m => m.id === msg.id) ? prev : [...prev, msg]);
     });
     return () => socketRef.current?.disconnect();
   }, []);
 
-  // Load conversations
-  useEffect(() => {
-    loadConversations();
-  }, []);
-
-  // Scroll to bottom on new messages
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  useEffect(() => { loadConversations(); }, []);
+  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages]);
 
   const loadConversations = async () => {
     try {
@@ -52,49 +42,41 @@ export default function ChatPage() {
   const openConversation = async (conv) => {
     setActiveConv(conv);
     setDisclaimerAgreed(false);
+    setShowList(false);
     socketRef.current?.emit('join_conversation', conv.id);
     try {
       const res = await axios.get(`/api/chat/conversations/${conv.id}/messages`);
       setMessages(res.data);
-      // Mark as read by reloading conversations
       loadConversations();
     } catch {}
   };
 
-  const sendMessage = async () => {
+  const sendMessage = () => {
     if (!input.trim() || !activeConv) return;
-    const content = input.trim();
+    socketRef.current?.emit('send_message', { conversationId: activeConv.id, content: input.trim() });
     setInput('');
-    socketRef.current?.emit('send_message', {
-      conversationId: activeConv.id,
-      content,
-    });
   };
 
-  const getOtherName = (conv) => {
-    return user?.role === 'student' ? conv.buddy_name : conv.student_name;
-  };
-
-  const getInitials = (name) => name?.split(' ').map(n => n[0]).join('').slice(0,2).toUpperCase();
-
-  const formatTime = (ts) => {
-    const d = new Date(ts);
-    return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-  };
-
+  const getOtherName = (conv) => user?.role === 'student' ? conv.buddy_name : conv.student_name;
+  const getInitials = (name) => name?.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+  const formatTime = (ts) => new Date(ts).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
   const formatDate = (ts) => {
     const d = new Date(ts);
+    const today = new Date();
+    if (d.toDateString() === today.toDateString()) return 'Today';
     return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
   };
 
   return (
     <div style={styles.container}>
 
-      {/* Conversations sidebar */}
-      <div style={styles.convList}>
+      {/* Conversation list */}
+      <div style={{ ...styles.convPanel, display: showList ? 'flex' : 'none' }}>
         <div style={styles.convHeader}>
           <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.2rem' }}>Messages</h3>
-          <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{conversations.length} chats</span>
+          <span style={{ fontSize: 12, color: 'var(--text-muted)', background: 'var(--cream)', padding: '3px 10px', borderRadius: 20, fontWeight: 600 }}>
+            {conversations.length}
+          </span>
         </div>
 
         {loading && <p style={styles.emptyText}>Loading...</p>}
@@ -103,9 +85,9 @@ export default function ChatPage() {
           <div style={styles.emptyState}>
             <div style={{ fontSize: '2.5rem', marginBottom: 10 }}>💬</div>
             <p style={{ fontWeight: 600, marginBottom: 4, fontSize: 14 }}>No conversations yet</p>
-            <p style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>
+            <p style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.6 }}>
               {user?.role === 'student'
-                ? 'Request a buddy and once accepted, you can start chatting!'
+                ? 'Get matched with a buddy to start chatting!'
                 : 'Accept a student request to start chatting!'}
             </p>
           </div>
@@ -113,18 +95,22 @@ export default function ChatPage() {
 
         {conversations.map(conv => (
           <div key={conv.id} onClick={() => openConversation(conv)}
-            style={{ ...styles.convItem, background: activeConv?.id === conv.id ? 'var(--green-light)' : 'transparent', borderLeft: activeConv?.id === conv.id ? '3px solid var(--green)' : '3px solid transparent' }}>
-            <div style={{ ...styles.convAvatar, background: 'linear-gradient(135deg,var(--green),var(--green-mid))' }}>
+            style={{ ...styles.convItem, background: activeConv?.id === conv.id ? 'var(--green-light)' : 'transparent' }}>
+            <div style={styles.convAvatar}>
               {getInitials(getOtherName(conv))}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontWeight: 600, fontSize: 14 }}>{getOtherName(conv)}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
+                <span style={{ fontWeight: 600, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 140 }}>
+                  {getOtherName(conv)}
+                </span>
                 {conv.last_message_time && (
-                  <span style={{ fontSize: 10, color: 'var(--text-faint)' }}>{formatDate(conv.last_message_time)}</span>
+                  <span style={{ fontSize: 10, color: 'var(--text-faint)', flexShrink: 0 }}>
+                    {formatDate(conv.last_message_time)}
+                  </span>
                 )}
               </div>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <div style={{ fontSize: 12, color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {conv.last_message || 'No messages yet'}
               </div>
             </div>
@@ -136,23 +122,20 @@ export default function ChatPage() {
       </div>
 
       {/* Chat window */}
-      <div style={styles.chatWindow}>
-        {!activeConv ? (
-          <div style={styles.noChatSelected}>
-            <div style={{ fontSize: '3rem', marginBottom: 12 }}>💬</div>
-            <h3 style={{ fontFamily: "'Playfair Display',serif", marginBottom: 8 }}>Select a conversation</h3>
-            <p style={{ fontSize: 14, color: 'var(--text-muted)' }}>Choose a chat from the left to start messaging</p>
-          </div>
-        ) : (
+      <div style={{ ...styles.chatPanel, display: !showList ? 'flex' : 'none' }}>
+        {activeConv && (
           <>
             {/* Chat header */}
             <div style={styles.chatHeader}>
-              <div style={{ ...styles.convAvatar, background: 'linear-gradient(135deg,var(--green),var(--coral))' }}>
-                {getInitials(getOtherName(activeConv))}
-              </div>
-              <div>
-                <div style={{ fontWeight: 700, fontSize: 15 }}>{getOtherName(activeConv)}</div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+              <button onClick={() => setShowList(true)} style={styles.backBtn} aria-label="Back">
+                ← Back
+              </button>
+              <div style={styles.convAvatar}>{getInitials(getOtherName(activeConv))}</div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontWeight: 700, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {getOtherName(activeConv)}
+                </div>
+                <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
                   {user?.role === 'student' ? 'Your Buddy' : 'Your Student'}
                 </div>
               </div>
@@ -161,17 +144,15 @@ export default function ChatPage() {
             {/* Disclaimer */}
             {!disclaimerAgreed && (
               <div style={styles.disclaimer}>
-                <div style={styles.disclaimerIcon}>⚠️</div>
-                <div style={{ flex: 1 }}>
-                  <div style={styles.disclaimerTitle}>Safety Reminder</div>
-                  <div style={styles.disclaimerText}>
-                    Please be cautious when chatting with people online. <strong>Never share personal details</strong> such as your home address, bank details, passport number, or National Insurance number. Settle-In Buddy will <strong>never</strong> ask you for money or financial information. If anyone asks for payment or makes you feel uncomfortable, please report them immediately. Stay safe and enjoy your UK journey! 🇬🇧
-                  </div>
-                  <button className="btn-primary" style={{ marginTop: 12, padding: '8px 20px', fontSize: 13 }}
-                    onClick={() => setDisclaimerAgreed(true)}>
-                    I understand, start chatting
-                  </button>
+                <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>⚠️</div>
+                <div style={styles.disclaimerTitle}>Safety Reminder</div>
+                <div style={styles.disclaimerText}>
+                  Please be cautious when chatting. <strong>Never share</strong> your home address, bank details, passport number, or NI number. If anyone asks for money or makes you uncomfortable, report them immediately.
                 </div>
+                <button className="btn-primary" style={{ marginTop: 14, width: '100%', padding: '12px' }}
+                  onClick={() => setDisclaimerAgreed(true)}>
+                  I understand — start chatting
+                </button>
               </div>
             )}
 
@@ -187,18 +168,21 @@ export default function ChatPage() {
                   {messages.map(msg => {
                     const isMe = msg.sender_id === user?.id;
                     return (
-                      <div key={msg.id} style={{ ...styles.messageRow, justifyContent: isMe ? 'flex-end' : 'flex-start' }}>
+                      <div key={msg.id} style={{ ...styles.msgRow, justifyContent: isMe ? 'flex-end' : 'flex-start' }}>
                         {!isMe && (
-                          <div style={{ ...styles.msgAvatar, background: 'linear-gradient(135deg,var(--green),var(--green-mid))' }}>
-                            {getInitials(msg.sender_name)}
-                          </div>
+                          <div style={styles.msgAvatar}>{getInitials(msg.sender_name)}</div>
                         )}
-                        <div style={{ maxWidth: '65%' }}>
-                          {!isMe && <div style={styles.senderName}>{msg.sender_name}</div>}
-                          <div style={{ ...styles.bubble, background: isMe ? 'var(--green)' : '#fff', color: isMe ? '#fff' : 'var(--text)', borderRadius: isMe ? '18px 18px 4px 18px' : '18px 18px 18px 4px' }}>
+                        <div style={{ maxWidth: '72%' }}>
+                          {!isMe && <div style={styles.senderLabel}>{msg.sender_name}</div>}
+                          <div style={{
+                            ...styles.bubble,
+                            background: isMe ? 'var(--green)' : '#fff',
+                            color: isMe ? '#fff' : 'var(--text)',
+                            borderRadius: isMe ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
+                          }}>
                             {msg.content}
                           </div>
-                          <div style={{ ...styles.msgTime, textAlign: isMe ? 'right' : 'left' }}>
+                          <div style={{ fontSize: 10, color: 'var(--text-faint)', marginTop: 3, textAlign: isMe ? 'right' : 'left', paddingLeft: 4, paddingRight: 4 }}>
                             {formatTime(msg.created_at)}
                           </div>
                         </div>
@@ -215,55 +199,58 @@ export default function ChatPage() {
 
                 {/* Input */}
                 <div style={styles.inputArea}>
-                  <input
-                    value={input}
-                    onChange={e => setInput(e.target.value)}
+                  <input value={input} onChange={e => setInput(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()}
                     placeholder="Type a message..."
-                    style={styles.input}
-                  />
-                  <button className="btn-primary" style={{ padding: '11px 20px', borderRadius: 50, fontSize: 14 }}
+                    style={styles.msgInput} />
+                  <button className="btn-primary" style={{ padding: '11px 16px', borderRadius: 50, fontSize: 13, minWidth: 70, minHeight: 44 }}
                     onClick={sendMessage} disabled={!input.trim()}>
-                    Send →
+                    Send
                   </button>
                 </div>
 
-                {/* Safety footer */}
-                <div style={styles.safetyFooter}>
-                  🔒 Never share personal details, bank information, or passwords in this chat
+                <div style={styles.safetyBar}>
+                  🔒 Never share personal details or bank info in chat
                 </div>
               </>
             )}
           </>
         )}
       </div>
+
+      {/* Desktop: show both panels side by side */}
+      <style>{`
+        @media (min-width: 768px) {
+          .chat-conv-panel { display: flex !important; width: 280px !important; flex-shrink: 0 !important; }
+          .chat-main-panel { display: flex !important; }
+          .chat-back-btn { display: none !important; }
+        }
+      `}</style>
     </div>
   );
 }
 
 const styles = {
-  container: { display: 'flex', height: 'calc(100vh - 100px)', gap: '1rem', minHeight: 500 },
-  convList: { width: 280, background: '#fff', borderRadius: 20, border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', overflow: 'hidden', flexShrink: 0 },
-  convHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.25rem 1rem 0.75rem', borderBottom: '1px solid var(--border)' },
-  convItem: { display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px', cursor: 'pointer', transition: 'all .15s', borderLeft: '3px solid transparent' },
-  convAvatar: { width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 14, flexShrink: 0 },
+  container: { display: 'flex', height: 'calc(100vh - 80px)', gap: '1rem', minHeight: 400, overflow: 'hidden' },
+  convPanel: { flexDirection: 'column', background: '#fff', borderRadius: 20, border: '1px solid var(--border)', overflow: 'hidden', width: '100%' },
+  chatPanel: { flex: 1, flexDirection: 'column', background: '#fff', borderRadius: 20, border: '1px solid var(--border)', overflow: 'hidden', width: '100%' },
+  convHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', borderBottom: '1px solid var(--border)', flexShrink: 0 },
+  convItem: { display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px', cursor: 'pointer', transition: 'background .15s', borderBottom: '1px solid var(--border)', minHeight: 70 },
+  convAvatar: { width: 42, height: 42, borderRadius: '50%', background: 'linear-gradient(135deg,var(--green),var(--green-mid))', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 14, flexShrink: 0 },
   unreadBadge: { background: 'var(--coral)', color: '#fff', borderRadius: '50%', width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, flexShrink: 0 },
-  emptyState: { textAlign: 'center', padding: '2rem 1rem' },
+  emptyState: { textAlign: 'center', padding: '2rem 1rem', flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' },
   emptyText: { padding: '1rem', color: 'var(--text-muted)', fontSize: 13 },
-  chatWindow: { flex: 1, background: '#fff', borderRadius: 20, border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', overflow: 'hidden' },
-  noChatSelected: { flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' },
-  chatHeader: { display: 'flex', alignItems: 'center', gap: 12, padding: '1rem 1.25rem', borderBottom: '1px solid var(--border)', background: '#fff' },
-  disclaimer: { margin: '1rem', background: '#fff8ec', border: '1.5px solid #f5a623', borderRadius: 16, padding: '1.25rem', display: 'flex', gap: 12, alignItems: 'flex-start' },
-  disclaimerIcon: { fontSize: '1.8rem', flexShrink: 0 },
-  disclaimerTitle: { fontWeight: 700, fontSize: 15, marginBottom: 6, color: '#92600a' },
+  chatHeader: { display: 'flex', alignItems: 'center', gap: 10, padding: '0.75rem 1rem', borderBottom: '1px solid var(--border)', flexShrink: 0 },
+  backBtn: { background: 'none', border: 'none', fontSize: 13, fontWeight: 700, color: 'var(--green)', cursor: 'pointer', padding: '6px 10px', borderRadius: 8, minHeight: 44, display: 'flex', alignItems: 'center' },
+  disclaimer: { margin: '1rem', background: '#fff8ec', border: '1.5px solid var(--amber)', borderRadius: 16, padding: '1.25rem', textAlign: 'center' },
+  disclaimerTitle: { fontWeight: 700, fontSize: 15, marginBottom: 8, color: '#92600a' },
   disclaimerText: { fontSize: 13, color: '#78500a', lineHeight: 1.7 },
-  messagesArea: { flex: 1, overflowY: 'auto', padding: '1rem', display: 'flex', flexDirection: 'column', gap: 12, background: 'var(--cream)' },
-  messageRow: { display: 'flex', alignItems: 'flex-end', gap: 8 },
-  msgAvatar: { width: 30, height: 30, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 11, flexShrink: 0 },
-  senderName: { fontSize: 11, color: 'var(--text-muted)', marginBottom: 3, fontWeight: 600, paddingLeft: 4 },
+  messagesArea: { flex: 1, overflowY: 'auto', padding: '1rem', display: 'flex', flexDirection: 'column', gap: 10, background: 'var(--cream)' },
+  msgRow: { display: 'flex', alignItems: 'flex-end', gap: 6 },
+  msgAvatar: { width: 28, height: 28, borderRadius: '50%', background: 'linear-gradient(135deg,var(--green),var(--green-mid))', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 10, flexShrink: 0 },
+  senderLabel: { fontSize: 11, color: 'var(--text-muted)', marginBottom: 3, fontWeight: 600, paddingLeft: 4 },
   bubble: { padding: '10px 14px', fontSize: 14, lineHeight: 1.5, boxShadow: '0 1px 4px rgba(0,0,0,0.06)', wordBreak: 'break-word' },
-  msgTime: { fontSize: 10, color: 'var(--text-faint)', marginTop: 3, paddingLeft: 4, paddingRight: 4 },
-  inputArea: { display: 'flex', gap: 10, padding: '1rem', borderTop: '1px solid var(--border)', background: '#fff', alignItems: 'center' },
-  input: { flex: 1, padding: '11px 18px', border: '2px solid var(--border)', borderRadius: 50, fontSize: 14, outline: 'none', fontFamily: "'Plus Jakarta Sans',sans-serif" },
-  safetyFooter: { textAlign: 'center', padding: '8px', fontSize: 11, color: 'var(--text-faint)', background: '#fff', borderTop: '1px solid var(--border)' },
+  inputArea: { display: 'flex', gap: 8, padding: '0.75rem', borderTop: '1px solid var(--border)', background: '#fff', alignItems: 'center', flexShrink: 0 },
+  msgInput: { flex: 1, padding: '11px 16px', border: '2px solid var(--border)', borderRadius: 50, fontSize: 16, outline: 'none', fontFamily: "'Plus Jakarta Sans',sans-serif", minWidth: 0 },
+  safetyBar: { textAlign: 'center', padding: '6px', fontSize: 10, color: 'var(--text-faint)', background: '#fff', borderTop: '1px solid var(--border)', flexShrink: 0 },
 };

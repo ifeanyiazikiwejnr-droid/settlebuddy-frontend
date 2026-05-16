@@ -120,14 +120,14 @@ const styles = {
     background: 'linear-gradient(160deg, rgba(6,40,30,0.92) 0%, rgba(10,92,68,0.78) 40%, rgba(255,92,58,0.35) 100%)',
     zIndex: 1,
   },
-  nav: {
-    position: 'relative',
-    zIndex: 10,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '1.5rem 2.5rem',
+  nav: { 
+    position: 'relative', 
+    zIndex: 10, display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'space-between', 
+    padding: '1rem 1.25rem', 
   },
+
   navLogo: {
     display: 'flex',
     alignItems: 'center',
@@ -191,14 +191,15 @@ const styles = {
     letterSpacing: '0.5px',
     marginBottom: 24,
   },
-  headline: {
-    fontFamily: "'Playfair Display',serif",
-    fontSize: 'clamp(2.8rem, 7vw, 5rem)',
-    color: '#fff',
-    lineHeight: 1.15,
-    marginBottom: 20,
+  headline: { 
+    fontFamily: "'Playfair Display',serif", 
+    fontSize: 'clamp(2.2rem, 8vw, 4.5rem)', 
+    color: '#fff', 
+    lineHeight: 1.15, 
+    marginBottom: 20, 
     textShadow: '0 2px 20px rgba(0,0,0,0.3)',
-  },
+   },
+
   subtext: {
     color: 'rgba(255,255,255,0.82)',
     fontSize: 16,
@@ -232,17 +233,19 @@ const styles = {
     cursor: 'pointer',
     transition: 'all .2s',
   },
-  stats: {
-    display: 'flex',
-    gap: 40,
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    padding: '24px 32px',
-    background: 'rgba(255,255,255,0.08)',
-    backdropFilter: 'blur(12px)',
-    borderRadius: 20,
-    border: '1px solid rgba(255,255,255,0.15)',
+  stats: { 
+    display: 'grid', 
+    gridTemplateColumns: 'repeat(2, 1fr)', 
+    gap: 16, 
+    padding: '20px', 
+    background: 'rgba(255,255,255,0.08)', 
+    backdropFilter: 'blur(12px)', 
+    borderRadius: 20, 
+    border: '1px solid rgba(255,255,255,0.15)', 
+    width: '100%', 
+    maxWidth: 360 
   },
+
   stat: { textAlign: 'center' },
   statNum: {
     fontFamily: "'Playfair Display',serif",
@@ -259,16 +262,17 @@ const styles = {
     textTransform: 'uppercase',
     letterSpacing: '0.8px',
   },
-  featureStrip: {
-    position: 'relative',
-    zIndex: 10,
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-    gap: 0,
-    borderTop: '1px solid rgba(255,255,255,0.1)',
-    background: 'rgba(0,0,0,0.35)',
-    backdropFilter: 'blur(16px)',
+  featureStrip: { 
+    position: 'relative', 
+    zIndex: 10, 
+    display: 'grid', 
+    gridTemplateColumns: 'repeat(2, 1fr)', 
+    gap: 0, 
+    borderTop: '1px solid rgba(255,255,255,0.1)', 
+    background: 'rgba(0,0,0,0.35)', 
+    backdropFilter: 'blur(16px)', 
   },
+  
   featureCard: {
     padding: '1.5rem',
     borderRight: '1px solid rgba(255,255,255,0.08)',
