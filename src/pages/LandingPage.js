@@ -232,29 +232,32 @@ const styles = {
     cursor: 'pointer',
     transition: 'all .2s',
   },
+
   stats: { 
     display: 'flex', 
-    flexWrap: 'wrap', 
-    gap: 32, 
-    justifyContent: 'center', 
-    padding: '20px 32px', 
+    flexWrap: 'nowrap', 
+    gap: 16, 
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
+    padding: '16px 24px', 
     background: 'rgba(255,255,255,0.08)', 
     backdropFilter: 'blur(12px)', 
     borderRadius: 20, 
     border: '1px solid rgba(255,255,255,0.15)', 
     width: '100%', 
-    maxWidth: 560 
+    maxWidth: 600 
   },
 
   stat: { textAlign: 'center' },
-  statNum: {
-    fontFamily: "'Playfair Display',serif",
-    fontSize: '1.8rem',
-    fontWeight: 700,
-    color: '#fff',
+  statNum: { 
+    fontFamily: "'Playfair Display',serif", 
+    fontSize: 'clamp(1.2rem, 3vw, 1.6rem)', 
+    fontWeight: 700, 
+    color: '#fff', 
     lineHeight: 1,
-    marginBottom: 4,
+    marginBottom: 4, 
   },
+  
   statLabel: {
     fontSize: 11,
     color: 'rgba(255,255,255,0.65)',
