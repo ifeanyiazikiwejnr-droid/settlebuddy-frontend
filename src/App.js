@@ -78,7 +78,7 @@ function AppRoutes() {
           </RoleRoute>
         } />
       </Route>
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to="/landing" replace />} />
     </Routes>
   );
 }
