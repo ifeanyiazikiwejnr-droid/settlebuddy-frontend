@@ -114,6 +114,15 @@ export default function LoginPage() {
             <div style={styles.errorBox}>{error}</div>
           )}
 
+          {mode === 'login' && role !== 'admin' && (
+          <p style={{ textAlign: 'right', fontSize: 13, marginBottom: 8 }}>
+            <span style={{ color: 'var(--green)', cursor: 'pointer', fontWeight: 600 }}
+              onClick={() => navigate('/forgot-password')}>
+              Forgot password?
+            </span>
+          </p>
+        )}
+
           <button className="btn-primary" style={{ width: '100%', padding: '14px', fontSize: 15, marginBottom: 16 }}
             onClick={submit} disabled={loading}>
             {loading ? 'Please wait...' : mode === 'login' ? 'Sign In →' : 'Create Account →'}
