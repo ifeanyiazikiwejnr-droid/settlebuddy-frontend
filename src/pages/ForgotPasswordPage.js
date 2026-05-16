@@ -73,10 +73,13 @@ export default function ForgotPasswordPage() {
             </div>
 
             <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
-              <button className="btn-secondary" style={{ flex: 1, padding: '10px', fontSize: 13 }} onClick={copyLink}>
+              <button className="btn-secondary" style={{ flex: 1, padding: '10px', fontSize: 13 }} onClick={() => {
+                navigator.clipboard.writeText(result.link);
+                alert('Link copied! You can now paste it in WhatsApp, email or SMS.');
+              }}>
                 📋 Copy Link
               </button>
-              <a href={`https://wa.me/?text=Reset your Settle-In Buddy password here: ${encodeURIComponent(result.link)}`}
+              <a href={`https://wa.me/?text=${encodeURIComponent('Reset your Settle-In Buddy password by clicking this link:\n\n' + result.link)}`}
                 target="_blank" rel="noreferrer"
                 style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: '#25D366', border: 'none', borderRadius: 50, padding: '10px', fontSize: 13, fontWeight: 600, color: '#fff', textDecoration: 'none', cursor: 'pointer' }}>
                 💬 WhatsApp
