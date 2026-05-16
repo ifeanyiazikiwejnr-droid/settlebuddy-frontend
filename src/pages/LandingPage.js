@@ -233,8 +233,8 @@ const styles = {
     transition: 'all .2s',
   },
   stats: { 
-    display: 'row', 
-    gridTemplateColumns: 'repeat(2, 1fr)', 
+    display: 'grid', 
+    gridTemplateColumns: 'repeat(1, 1fr)', 
     gap: 16, 
     padding: '20px', 
     background: 'rgba(255,255,255,0.08)', 
