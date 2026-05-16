@@ -233,16 +233,17 @@ const styles = {
     transition: 'all .2s',
   },
   stats: { 
-    display: 'grid', 
-    gridTemplateColumns: 'repeat(1, 1fr)', 
-    gap: 16, 
-    padding: '20px', 
+    display: 'flex', 
+    flexWrap: 'wrap', 
+    gap: 32, 
+    justifyContent: 'center', 
+    padding: '20px 32px', 
     background: 'rgba(255,255,255,0.08)', 
     backdropFilter: 'blur(12px)', 
     borderRadius: 20, 
     border: '1px solid rgba(255,255,255,0.15)', 
     width: '100%', 
-    maxWidth: 360 
+    maxWidth: 560 
   },
 
   stat: { textAlign: 'center' },
