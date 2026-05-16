@@ -205,7 +205,7 @@ export default function ChatPage() {
                     style={styles.msgInput} />
                   <button className="btn-primary" style={{ padding: '10px 16px', borderRadius: 50, fontSize: 13, minWidth: 60, maxWidth: 70, flexShrink: 0, minHeight: 44 }}
                     onClick={sendMessage} disabled={!input.trim()}>
-                    →
+                    Send
                   </button>
                 </div>
 
