@@ -203,9 +203,9 @@ export default function ChatPage() {
                     onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()}
                     placeholder="Type a message..."
                     style={styles.msgInput} />
-                  <button className="btn-primary" style={{ padding: '11px 16px', borderRadius: 50, fontSize: 13, minWidth: 70, minHeight: 44 }}
+                  <button className="btn-primary" style={{ padding: '10px 16px', borderRadius: 50, fontSize: 13, minWidth: 60, maxWidth: 70, flexShrink: 0, minHeight: 44 }}
                     onClick={sendMessage} disabled={!input.trim()}>
-                    Send
+                    →
                   </button>
                 </div>
 
@@ -245,12 +245,12 @@ const styles = {
   disclaimer: { margin: '1rem', background: '#fff8ec', border: '1.5px solid var(--amber)', borderRadius: 16, padding: '1.25rem', textAlign: 'center' },
   disclaimerTitle: { fontWeight: 700, fontSize: 15, marginBottom: 8, color: '#92600a' },
   disclaimerText: { fontSize: 13, color: '#78500a', lineHeight: 1.7 },
-  messagesArea: { flex: 1, overflowY: 'auto', padding: '1rem', display: 'flex', flexDirection: 'column', gap: 10, background: 'var(--cream)' },
-  msgRow: { display: 'flex', alignItems: 'flex-end', gap: 6 },
+  messagesArea: { flex: 1, overflowY: 'auto', padding: '1rem', display: 'flex', flexDirection: 'column', gap: 10, background: 'var(--cream)', alignItems: 'stretch', width: '100%', boxSizing: 'border-box' },
+  msgRow: { display: 'flex', alignItems: 'flex-end', gap: 6, width: '100%', boxSizing: 'border-box' },
   msgAvatar: { width: 28, height: 28, borderRadius: '50%', background: 'linear-gradient(135deg,var(--green),var(--green-mid))', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 10, flexShrink: 0 },
   senderLabel: { fontSize: 11, color: 'var(--text-muted)', marginBottom: 3, fontWeight: 600, paddingLeft: 4 },
   bubble: { padding: '10px 14px', fontSize: 14, lineHeight: 1.5, boxShadow: '0 1px 4px rgba(0,0,0,0.06)', wordBreak: 'break-word' },
-  inputArea: { display: 'flex', gap: 8, padding: '0.75rem', borderTop: '1px solid var(--border)', background: '#fff', alignItems: 'center', flexShrink: 0 },
-  msgInput: { flex: 1, padding: '11px 16px', border: '2px solid var(--border)', borderRadius: 50, fontSize: 16, outline: 'none', fontFamily: "'Plus Jakarta Sans',sans-serif", minWidth: 0 },
+  inputArea: { display: 'flex', gap: 8, padding: '0.75rem', borderTop: '1px solid var(--border)', background: '#fff', alignItems: 'center', flexShrink: 0, boxSizing: 'border-box', width: '100%' },
+  msgInput: { flex: 1, padding: '11px 14px', border: '2px solid var(--border)', borderRadius: 50, fontSize: 16, outline: 'none', fontFamily: "'Plus Jakarta Sans',sans-serif", minWidth: 0, width: '100%', boxSizing: 'border-box' },
   safetyBar: { textAlign: 'center', padding: '6px', fontSize: 10, color: 'var(--text-faint)', background: '#fff', borderTop: '1px solid var(--border)', flexShrink: 0 },
 };
