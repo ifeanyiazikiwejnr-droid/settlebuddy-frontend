@@ -67,7 +67,7 @@ export default function Footer() {
 const styles = {
   footer: {
     background: 'linear-gradient(160deg, #063d2e 0%, #0a5c44 60%, #0f7a5a 100%)',
-    marginTop: 'auto',
+    marginTop: '4rem',
     borderTop: '1px solid rgba(255,255,255,0.08)',
   },
   inner: {
