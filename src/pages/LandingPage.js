@@ -102,7 +102,7 @@ const styles = {
     Height: '100vh',
     position: 'relative',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     overflow: 'hidden',
   },
   bgImage: {
