@@ -121,10 +121,12 @@ const styles = {
   },
   nav: { 
     position: 'relative', 
-    zIndex: 10, display: 'flex', 
+    zIndex: 10, 
+    display: 'flex', 
     alignItems: 'center', 
     justifyContent: 'space-between', 
     padding: '1rem 1.25rem', 
+    gap: 8 
   },
 
   navLogo: {
@@ -160,11 +162,13 @@ const styles = {
     border: '1.5px solid rgba(255,255,255,0.3)',
     color: '#fff',
     borderRadius: 50,
-    padding: '8px 20px',
-    fontSize: 13,
+    padding: '8px 16px',
+    fontSize: 12,
     fontWeight: 600,
     cursor: 'pointer',
     transition: 'all .2s',
+    whiteSpace: 'nowrap',
+    flexShrink: 0,
   },
   content: {
     position: 'relative',
@@ -257,7 +261,7 @@ const styles = {
     lineHeight: 1,
     marginBottom: 4, 
   },
-  
+
   statLabel: {
     fontSize: 11,
     color: 'rgba(255,255,255,0.65)',
