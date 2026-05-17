@@ -15,6 +15,7 @@ import BuddyProfilePage from './pages/BuddyProfilePage';
 import BuddyRequestsPage from './pages/BuddyRequestsPage';
 import UsersPage from './pages/UsersPage';
 import UserListPage from './pages/UserListPage';
+import AccommodationDetailPage from './pages/AccommodationDetailPage';
 import ChatPage from './pages/ChatPage';
 import RegisterBuddyPage from './pages/RegisterBuddyPage';
 import BuddyInvitePage from './pages/BuddyInvitePage';
@@ -46,7 +47,7 @@ function AppRoutes() {
       <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
       <Route path="/" element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
         <Route index element={<HomePage />} />
-        <Route path="accommodations" element={<AccommodationsPage />} />
+        <Route path="accommodations" element={<AccommodationsPage />} /><Route path="accommodations/:id" element={<AccommodationDetailPage />} />
         <Route path="transport" element={<TransportPage />} />
         <Route path="buddy" element={
           <RoleRoute roles={['student']}>

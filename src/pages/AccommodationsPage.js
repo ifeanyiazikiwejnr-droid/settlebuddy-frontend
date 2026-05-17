@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const agencies = [
@@ -41,6 +41,7 @@ export default function AccommodationsPage() {
   const [imagePreview, setImagePreview] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const navigate = useNavigate();
 
   const loadCities = async () => {
     try {
@@ -274,7 +275,8 @@ export default function AccommodationsPage() {
           ) : (
             <div style={styles.listingsGrid}>
               {listings.map(l => (
-                <div key={l.id} className="card card-hover" style={{ padding: 0, overflow: 'hidden' }}>
+                <div key={l.id} className="card card-hover" style={{ padding: 0, overflow: 'hidden', cursor: 'pointer' }}
+                onClick={() => navigate(`/accommodations/${l.id}`)}>
                   {/* Image */}
                   <div style={{ height: 180, background: 'linear-gradient(135deg,#9FE1CB,#1d9e75)', position: 'relative', overflow: 'hidden' }}>
                     {l.image_url
