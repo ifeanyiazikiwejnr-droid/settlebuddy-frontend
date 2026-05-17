@@ -315,7 +315,7 @@ export default function AccommodationsPage() {
                       </p>
                     )}
                     {user?.role === 'admin' && (
-                      <button onClick={() => deleteListing(l.id)}
+                      <button onClick={(e) => { e.stopPropagation(); deleteListing(l.id); }}
                         style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 12, color: 'var(--coral-dark)', fontWeight: 600, padding: 0 }}>
                         Remove listing
                       </button>
