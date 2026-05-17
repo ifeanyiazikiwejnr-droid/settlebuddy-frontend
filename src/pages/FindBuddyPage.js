@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useOutletContext, useNavigate } from 'react-router-dom';
+import ConfirmModal from '../components/ConfirmModal';
+import useConfirm from '../hooks/useConfirm';
 
 const avatarColors = [
   'linear-gradient(135deg,#0a5c44,#0f7a5a)',
@@ -21,6 +23,7 @@ export default function FindBuddyPage() {
   const [requesting, setRequesting] = useState({});
   const [myStatus, setMyStatus] = useState(null);
   const [statusLoading, setStatusLoading] = useState(true);
+  const { modal, confirm } = useConfirm();
 
   const loadStatus = async () => {
     try {
@@ -40,6 +43,25 @@ export default function FindBuddyPage() {
   };
 
   useEffect(() => { load(); loadStatus(); }, []);
+
+  const unmatch = async () => {
+    const ok = await confirm({
+      title: 'Unmatch Buddy',
+      message: `Are you sure you want to unmatch? You will lose your current buddy and your chat history. You can request a new buddy afterwards.`,
+      confirmText: 'Unmatch',
+      cancelText: 'Keep my buddy',
+      danger: true,
+    });
+    if (!ok) return;
+    try {
+      await axios.delete('/api/buddies/unmatch');
+      showToast('Unmatched successfully');
+      setMyStatus(null);
+      load();
+    } catch (err) {
+      showToast(err.response?.data?.error || 'Error unmatching');
+    }
+  };
 
   const request = async (buddyId, buddyName) => {
     setRequesting(r => ({ ...r, [buddyId]: true }));
@@ -101,11 +123,18 @@ export default function FindBuddyPage() {
               </>
             )}
           </div>
-          {myStatus.status === 'accepted' && myStatus.conversation_id && (
-            <button className="btn-primary" style={{ flexShrink: 0, padding: '9px 18px', fontSize: 13 }}
-              onClick={() => navigate('/chat')}>
-              💬 Chat
-            </button>
+          {myStatus.status === 'accepted' && (
+            <div style={{ display: 'flex', gap: 8, flexShrink: 0, flexWrap: 'wrap' }}>
+              {myStatus.conversation_id && (
+                <button className="btn-primary" style={{ padding: '9px 18px', fontSize: 13 }}
+                  onClick={() => navigate('/chat')}>
+                  💬 Chat
+                </button>
+              )}
+              <button style={styles.unmatchBtn} onClick={unmatch}>
+                Unmatch
+              </button>
+            </div>
           )}
         </div>
       )}
@@ -121,11 +150,16 @@ export default function FindBuddyPage() {
               ? 'You already have an active buddy'
               : 'You have a pending request'}
           </p>
-          <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>
+          <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: 16 }}>
             {myStatus.status === 'accepted'
-              ? `You are currently matched with ${myStatus.buddy_name}. You can only have one buddy at a time. If you'd like a different buddy, please speak to your admin.`
+              ? `You are currently matched with ${myStatus.buddy_name}. You can only have one buddy at a time.`
               : `Your request to ${myStatus.buddy_name} is pending. You cannot request another buddy until this is resolved.`}
           </p>
+          {myStatus.status === 'accepted' && (
+            <button style={styles.unmatchBtn} onClick={unmatch}>
+              Unmatch from {myStatus.buddy_name}
+            </button>
+          )}
         </div>
       ) : (
         <>
@@ -194,6 +228,7 @@ export default function FindBuddyPage() {
           </div>
         </>
       )}
+    <ConfirmModal {...modal} />
     </div>
   );
 }
@@ -214,4 +249,5 @@ const styles = {
   cardBody: { padding: '2rem 1.25rem 1.25rem' },
   busyBtn: { width: '100%', padding: '10px', background: 'var(--cream-dark)', borderRadius: 50, textAlign: 'center', fontSize: 13, fontWeight: 600, color: 'var(--text-muted)' },
   emptyState: { textAlign: 'center', padding: '4rem 2rem', background: '#fff', borderRadius: 24, border: '1px solid var(--border)' },
+  unmatchBtn: { background: 'var(--coral-light)', border: '1.5px solid var(--coral)', borderRadius: 50, padding: '8px 18px', fontSize: 13, fontWeight: 700, color: 'var(--coral-dark)', cursor: 'pointer', fontFamily: "'Plus Jakarta Sans',sans-serif", minHeight: 44 },
 };
