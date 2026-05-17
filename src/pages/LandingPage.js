@@ -22,10 +22,6 @@ export default function LandingPage() {
           <div style={styles.logoMark}>S</div>
           <span style={styles.logoText}>Settle-In Buddy</span>
         </div>
-        <button className="btn-outline" style={styles.navLogin}
-          onClick={() => navigate('/login')}>
-          Sign In
-        </button>
       </nav>
 
       {/* Hero content */}
@@ -156,20 +152,7 @@ const styles = {
     color: '#fff',
     letterSpacing: '0.3px',
   },
-  navLogin: {
-    background: 'rgba(255,255,255,0.12)',
-    backdropFilter: 'blur(8px)',
-    border: '1.5px solid rgba(255,255,255,0.3)',
-    color: '#fff',
-    borderRadius: 50,
-    padding: '8px 16px',
-    fontSize: 12,
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all .2s',
-    whiteSpace: 'nowrap',
-    flexShrink: 0,
-  },
+  
   content: {
     position: 'relative',
     zIndex: 10,
