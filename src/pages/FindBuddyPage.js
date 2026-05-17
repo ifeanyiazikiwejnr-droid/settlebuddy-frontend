@@ -94,44 +94,53 @@ export default function FindBuddyPage() {
           background: myStatus.status === 'accepted' ? 'var(--green-light)' : 'var(--amber-light)',
           borderColor: myStatus.status === 'accepted' ? '#9FE1CB' : '#f5a623',
         }}>
-          <div style={{ fontSize: '2rem', flexShrink: 0 }}>
-            {myStatus.status === 'accepted' ? '🤝' : '⏳'}
+          {/* Top row — icon + name */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ fontSize: '1.8rem', flexShrink: 0 }}>
+              {myStatus.status === 'accepted' ? '🤝' : '⏳'}
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              {myStatus.status === 'accepted' ? (
+                <>
+                  <div style={{ fontWeight: 700, color: 'var(--green)', fontSize: 14, marginBottom: 2 }}>
+                    Matched with {myStatus.buddy_name}!
+                  </div>
+                  <div style={{ fontSize: 12, color: '#085041' }}>
+                    {myStatus.university} · {myStatus.origin}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div style={{ fontWeight: 700, color: '#92600a', fontSize: 14, marginBottom: 2 }}>
+                    Request pending
+                  </div>
+                  <div style={{ fontSize: 12, color: '#78500a' }}>
+                    Waiting for {myStatus.buddy_name} to accept
+                  </div>
+                </>
+              )}
+            </div>
           </div>
-          <div style={{ flex: 1 }}>
-            {myStatus.status === 'accepted' ? (
-              <>
-                <div style={{ fontWeight: 700, color: 'var(--green)', fontSize: 15, marginBottom: 4 }}>
-                  You are matched with {myStatus.buddy_name}!
-                </div>
-                <div style={{ fontSize: 13, color: '#085041', marginBottom: 2 }}>
-                  {myStatus.university} · {myStatus.origin}
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 6 }}>
-                  {(myStatus.languages || []).map(l => (
-                    <span key={l} className="badge badge-teal">{l}</span>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <>
-                <div style={{ fontWeight: 700, color: '#92600a', fontSize: 15, marginBottom: 4 }}>
-                  Request pending for {myStatus.buddy_name}
-                </div>
-                <div style={{ fontSize: 13, color: '#78500a' }}>
-                  Waiting for your buddy to accept. You'll be notified once they respond.
-                </div>
-              </>
-            )}
-          </div>
+
+          {/* Languages */}
+          {myStatus.status === 'accepted' && (myStatus.languages || []).length > 0 && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+              {(myStatus.languages || []).map(l => (
+                <span key={l} className="badge badge-teal">{l}</span>
+              ))}
+            </div>
+          )}
+
+          {/* Action buttons */}
           {myStatus.status === 'accepted' && (
-            <div style={{ display: 'flex', gap: 8, flexShrink: 0, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 8 }}>
               {myStatus.conversation_id && (
-                <button className="btn-primary" style={{ padding: '9px 18px', fontSize: 13 }}
+                <button className="btn-primary" style={{ flex: 1, padding: '10px', fontSize: 13 }}
                   onClick={() => navigate('/chat')}>
                   💬 Chat
                 </button>
               )}
-              <button style={styles.unmatchBtn} onClick={unmatch}>
+              <button style={{ ...styles.unmatchBtn, flex: 1 }} onClick={unmatch}>
                 Unmatch
               </button>
             </div>
@@ -237,7 +246,7 @@ const styles = {
   heroBanner: { borderRadius: 24, overflow: 'hidden', position: 'relative', height: 180, marginBottom: '1.5rem' },
   heroOverlay: { position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(255,92,58,0.85) 0%, rgba(10,92,68,0.7) 100%)' },
   heroContent: { position: 'relative', zIndex: 1, padding: '1.5rem 2rem', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' },
-  statusBanner: { borderRadius: 16, border: '1.5px solid', padding: '1.25rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' },
+  statusBanner: { borderRadius: 16, border: '1.5px solid', padding: '1rem', marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: 12 },
   blockedNote: { background: '#fff', border: '1px solid var(--border)', borderRadius: 20, padding: '2.5rem', textAlign: 'center' },
   searchWrap: { display: 'flex', gap: 10, marginBottom: '1.5rem', alignItems: 'center' },
   searchBox: { flex: 1, display: 'flex', alignItems: 'center', gap: 10, background: '#fff', border: '2px solid var(--border)', borderRadius: 50, padding: '10px 18px', boxShadow: 'var(--shadow-sm)' },
