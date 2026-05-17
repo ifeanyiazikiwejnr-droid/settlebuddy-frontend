@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
+import ConfirmModal from '../components/ConfirmModal';
+import useConfirm from '../hooks/useConfirm';
 
 const roleConfig = {
   students: { label: 'Students', icon: '🎓', color: 'var(--green)', bg: 'var(--green-light)' },
@@ -19,6 +21,7 @@ export default function UserListPage() {
   const [deleting, setDeleting] = useState({});
 
   const config = roleConfig[role] || roleConfig.students;
+  const { modal, confirm } = useConfirm();
 
   const load = async () => {
     try {
@@ -42,7 +45,14 @@ export default function UserListPage() {
   }, [search, users]);
 
   const deleteUser = async (id, name) => {
-    if (!window.confirm(`Remove ${name}? This cannot be undone.`)) return;
+    const ok = await confirm({
+      title: 'Remove User',
+      message: `Are you sure you want to remove ${name}? Their account and all associated data will be permanently deleted.`,
+      confirmText: 'Remove User',
+      cancelText: 'Cancel',
+      danger: true,
+    });
+    if (!ok) return;
     setDeleting(d => ({ ...d, [id]: true }));
     try {
       await axios.delete(`/api/users/${id}`);
@@ -147,6 +157,7 @@ export default function UserListPage() {
           ))}
         </div>
       )}
+    <ConfirmModal {...modal} />
     </div>
   );
 }

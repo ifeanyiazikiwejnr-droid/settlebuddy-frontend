@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import ConfirmModal from '../components/ConfirmModal';
+import useConfirm from '../hooks/useConfirm';
 
 const agencies = [
   { name: 'Rightmove', desc: "UK's largest property portal", url: 'https://www.rightmove.co.uk', icon: '🏠' },
@@ -42,6 +44,7 @@ export default function AccommodationsPage() {
   const [uploading, setUploading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const navigate = useNavigate();
+  const { modal, confirm } = useConfirm();
 
   const loadCities = async () => {
     try {
@@ -105,7 +108,14 @@ export default function AccommodationsPage() {
   };
 
   const deleteListing = async (id) => {
-    if (!window.confirm('Remove this listing?')) return;
+    const ok = await confirm({
+      title: 'Remove Listing',
+      message: 'Are you sure you want to remove this listing? This cannot be undone.',
+      confirmText: 'Remove',
+      cancelText: 'Keep it',
+      danger: true,
+    });
+    if (!ok) return;
     try {
       await axios.delete(`/api/accommodations/${id}`);
       showToast('Listing removed');
@@ -317,6 +327,7 @@ export default function AccommodationsPage() {
           )}
         </div>
       )}
+    <ConfirmModal {...modal} />
     </div>
   );
 }

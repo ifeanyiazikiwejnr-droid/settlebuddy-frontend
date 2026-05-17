@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useOutletContext } from 'react-router-dom';
+import ConfirmModal from '../components/ConfirmModal';
+import useConfirm from '../hooks/useConfirm';
 
 export default function BuddyRequestsPage() {
   const { showToast } = useOutletContext();
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState({});
+  const { modal, confirm } = useConfirm();
 
   const load = async () => {
     try {
@@ -18,7 +21,17 @@ export default function BuddyRequestsPage() {
 
   useEffect(() => { load(); }, []);
 
-  const respond = async (id, status) => {
+  const respond = async (id, status, studentName) => {
+    const ok = await confirm({
+      title: status === 'accepted' ? 'Accept Request' : 'Decline Request',
+      message: status === 'accepted'
+        ? `Accept ${studentName} as your student? You'll be able to chat with them once accepted.`
+        : `Decline ${studentName}'s request? They will need to request another buddy.`,
+      confirmText: status === 'accepted' ? 'Accept' : 'Decline',
+      cancelText: 'Cancel',
+      danger: status === 'declined',
+    });
+    if (!ok) return;
     setUpdating(u => ({ ...u, [id]: true }));
     try {
       await axios.patch(`/api/buddies/requests/${id}`, { status });
@@ -65,11 +78,11 @@ export default function BuddyRequestsPage() {
             {r.status === 'pending' && (
               <div style={{ display: 'flex', gap: 8 }}>
                 <button className="btn-primary" style={{ padding: '6px 14px', fontSize: 12 }}
-                  onClick={() => respond(r.id, 'accepted')} disabled={updating[r.id]}>
+                  onClick={() => respond(r.id, 'accepted', r.student_name)} disabled={updating[r.id]}>
                   Accept
                 </button>
                 <button className="btn-outline" style={{ padding: '6px 14px', fontSize: 12, color: 'var(--coral)', borderColor: 'var(--coral)' }}
-                  onClick={() => respond(r.id, 'declined')} disabled={updating[r.id]}>
+                  onClick={() => respond(r.id, 'declined', r.student_name)} disabled={updating[r.id]}>
                   Decline
                 </button>
               </div>
@@ -77,6 +90,7 @@ export default function BuddyRequestsPage() {
           </div>
         ))}
       </div>
+    <ConfirmModal {...modal} />
     </div>
   );
 }

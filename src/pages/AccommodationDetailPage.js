@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import ConfirmModal from '../components/ConfirmModal';
+import useConfirm from '../hooks/useConfirm';
 
 export default function AccommodationDetailPage() {
   const { id } = useParams();
@@ -15,6 +17,7 @@ export default function AccommodationDetailPage() {
   const [editingDesc, setEditingDesc] = useState(false);
   const [detailedDesc, setDetailedDesc] = useState('');
   const [savingDesc, setSavingDesc] = useState(false);
+  const { modal, confirm } = useConfirm();
 
   const load = async () => {
     try {
@@ -53,7 +56,14 @@ export default function AccommodationDetailPage() {
   };
 
   const deleteImage = async (imageId) => {
-    if (!window.confirm('Remove this image?')) return;
+    const ok = await confirm({
+      title: 'Remove Image',
+      message: 'Are you sure you want to remove this image?',
+      confirmText: 'Remove',
+      cancelText: 'Keep it',
+      danger: true,
+    });
+    if (!ok) return;
     try {
       await axios.delete(`/api/accommodations/${id}/images/${imageId}`);
       showToast('Image removed');
@@ -220,6 +230,7 @@ export default function AccommodationDetailPage() {
         </div>
       </div>
 
+    <ConfirmModal {...modal} />
     </div>
   );
 }
