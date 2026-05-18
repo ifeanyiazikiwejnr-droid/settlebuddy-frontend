@@ -1,60 +1,78 @@
 <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-  <!-- Rounded orange background -->
-  <rect x="0" y="0" width="120" height="120" rx="26" fill="#f07020"/>
+
+  <!-- Rounded square background -->
+  <rect x="0" y="0" width="120" height="120" rx="26" fill="#fff"/>
+
+  <!-- Mini UK flag background -->
+  <g opacity="0.9">
+    <rect x="6" y="6" width="108" height="108" rx="20" fill="#012169"/>
+    <line x1="6" y1="6" x2="114" y2="114" stroke="#fff" stroke-width="24"/>
+    <line x1="114" y1="6" x2="6" y2="114" stroke="#fff" stroke-width="24"/>
+    <line x1="6" y1="6" x2="114" y2="114" stroke="#C8102E" stroke-width="8"/>
+    <line x1="114" y1="6" x2="6" y2="114" stroke="#C8102E" stroke-width="8"/>
+    <rect x="6" y="52" width="108" height="16" fill="#fff"/>
+    <rect x="52" y="6" width="16" height="108" fill="#fff"/>
+    <rect x="6" y="55" width="108" height="10" fill="#C8102E"/>
+    <rect x="55" y="6" width="10" height="108" fill="#C8102E"/>
+    <rect x="6" y="6" width="108" height="108" rx="20" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  </g>
 
   <!-- Telescopic handle rods -->
-  <rect x="41" y="10" width="7" height="36" rx="3" fill="#b04a00"/>
-  <rect x="43" y="11" width="4" height="34" rx="2" fill="#d06010"/>
-  <rect x="72" y="10" width="7" height="36" rx="3" fill="#b04a00"/>
-  <rect x="74" y="11" width="4" height="34" rx="2" fill="#d06010"/>
+  <rect x="41" y="10" width="7" height="34" rx="3" fill="#c45c00"/>
+  <rect x="43" y="11" width="4" height="32" rx="2" fill="#e07020"/>
+  <rect x="72" y="10" width="7" height="34" rx="3" fill="#c45c00"/>
+  <rect x="74" y="11" width="4" height="32" rx="2" fill="#e07020"/>
   <!-- Handle grip -->
-  <rect x="34" y="6" width="52" height="14" rx="7" fill="#b04a00"/>
-  <rect x="37" y="8" width="46" height="10" rx="5" fill="#d06010"/>
-  <rect x="40" y="10" width="40" height="6" rx="3" fill="#e07020"/>
-  <rect x="44" y="11" width="32" height="3" rx="1.5" fill="#c05010"/>
+  <rect x="34" y="6" width="52" height="13" rx="6" fill="#c45c00"/>
+  <rect x="37" y="8" width="46" height="9" rx="4" fill="#e07020"/>
+  <rect x="40" y="9" width="40" height="6" rx="3" fill="#f08030"/>
 
   <!-- Suitcase body -->
-  <rect x="16" y="42" width="88" height="64" rx="12" fill="#f8a040"/>
-  <!-- Gloss highlight -->
-  <rect x="19" y="45" width="82" height="16" rx="8" fill="#ffc070" opacity="0.5"/>
-  <!-- Corner bolts -->
-  <rect x="16" y="42" width="14" height="14" rx="5" fill="#d05c10"/>
-  <rect x="90" y="42" width="14" height="14" rx="5" fill="#d05c10"/>
+  <rect x="16" y="40" width="88" height="66" rx="12" fill="#f07020"/>
+  <!-- Gloss -->
+  <rect x="19" y="43" width="82" height="16" rx="8" fill="#f8a060" opacity="0.5"/>
+  <!-- Corners -->
+  <rect x="16" y="40" width="14" height="14" rx="5" fill="#d05c10"/>
+  <rect x="90" y="40" width="14" height="14" rx="5" fill="#d05c10"/>
   <rect x="16" y="92" width="14" height="14" rx="5" fill="#d05c10"/>
   <rect x="90" y="92" width="14" height="14" rx="5" fill="#d05c10"/>
-  <circle cx="22" cy="48" r="3" fill="#b04a00"/>
-  <circle cx="98" cy="48" r="3" fill="#b04a00"/>
+  <circle cx="22" cy="46" r="3" fill="#b04a00"/>
+  <circle cx="98" cy="46" r="3" fill="#b04a00"/>
   <circle cx="22" cy="98" r="3" fill="#b04a00"/>
   <circle cx="98" cy="98" r="3" fill="#b04a00"/>
   <!-- Centre split -->
-  <line x1="60" y1="44" x2="60" y2="104" stroke="#c05010" stroke-width="2"/>
+  <line x1="60" y1="42" x2="60" y2="104" stroke="#c05010" stroke-width="2"/>
   <!-- Ribs -->
-  <rect x="20" y="58" width="80" height="3" rx="1.5" fill="#c05010" opacity="0.35"/>
-  <rect x="20" y="70" width="80" height="3" rx="1.5" fill="#c05010" opacity="0.35"/>
-  <rect x="20" y="82" width="80" height="3" rx="1.5" fill="#c05010" opacity="0.35"/>
-  <rect x="20" y="94" width="80" height="3" rx="1.5" fill="#c05010" opacity="0.35"/>
+  <rect x="20" y="56" width="80" height="3" rx="1.5" fill="#c05010" opacity="0.35"/>
+  <rect x="20" y="68" width="80" height="3" rx="1.5" fill="#c05010" opacity="0.35"/>
+  <rect x="20" y="80" width="80" height="3" rx="1.5" fill="#c05010" opacity="0.35"/>
+  <rect x="20" y="92" width="80" height="3" rx="1.5" fill="#c05010" opacity="0.35"/>
   <!-- Latch -->
-  <rect x="42" y="66" width="36" height="10" rx="4" fill="#b04a00"/>
-  <rect x="44" y="68" width="32" height="6" rx="3" fill="#8a3800"/>
-  <rect x="46" y="69" width="8" height="4" rx="2" fill="#f8c060"/>
-  <rect x="66" y="69" width="8" height="4" rx="2" fill="#f8c060"/>
+  <rect x="42" y="64" width="36" height="10" rx="4" fill="#b04a00"/>
+  <rect x="44" y="66" width="32" height="6" rx="3" fill="#8a3800"/>
+  <rect x="46" y="67" width="8" height="4" rx="2" fill="#f8c060"/>
+  <rect x="66" y="67" width="8" height="4" rx="2" fill="#f8c060"/>
 
-  <!-- Carry handle top -->
-  <rect x="44" y="37" width="32" height="10" rx="5" fill="#b04a00"/>
-  <rect x="47" y="39" width="26" height="6" rx="3" fill="#d06010"/>
-  <rect x="42" y="38" width="8" height="8" rx="3" fill="#8a3800"/>
-  <rect x="70" y="38" width="8" height="8" rx="3" fill="#8a3800"/>
+  <!-- Carry handle -->
+  <rect x="44" y="35" width="32" height="10" rx="5" fill="#c45c00"/>
+  <rect x="47" y="37" width="26" height="6" rx="3" fill="#e07020"/>
+  <rect x="42" y="36" width="8" height="8" rx="3" fill="#b04a00"/>
+  <rect x="70" y="36" width="8" height="8" rx="3" fill="#b04a00"/>
 
   <!-- Wheels -->
-  <rect x="20" y="103" width="18" height="7" rx="3" fill="#8a3800"/>
+  <rect x="20" y="103" width="18" height="6" rx="3" fill="#8a3800"/>
   <circle cx="29" cy="113" r="7" fill="#2c1a00"/>
   <circle cx="29" cy="113" r="4.5" fill="#3d2400"/>
   <circle cx="29" cy="113" r="2.5" fill="#5a3600"/>
   <circle cx="29" cy="113" r="1" fill="#f8c060" opacity="0.8"/>
+  <line x1="29" y1="106" x2="29" y2="120" stroke="#5a3600" stroke-width="1.5" opacity="0.5"/>
+  <line x1="22" y1="113" x2="36" y2="113" stroke="#5a3600" stroke-width="1.5" opacity="0.5"/>
 
-  <rect x="82" y="103" width="18" height="7" rx="3" fill="#8a3800"/>
+  <rect x="82" y="103" width="18" height="6" rx="3" fill="#8a3800"/>
   <circle cx="91" cy="113" r="7" fill="#2c1a00"/>
   <circle cx="91" cy="113" r="4.5" fill="#3d2400"/>
   <circle cx="91" cy="113" r="2.5" fill="#5a3600"/>
   <circle cx="91" cy="113" r="1" fill="#f8c060" opacity="0.8"/>
+  <line x1="91" y1="106" x2="91" y2="120" stroke="#5a3600" stroke-width="1.5" opacity="0.5"/>
+  <line x1="84" y1="113" x2="98" y2="113" stroke="#5a3600" stroke-width="1.5" opacity="0.5"/>
 </svg>
