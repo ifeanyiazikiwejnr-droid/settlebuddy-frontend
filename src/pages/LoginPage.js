@@ -16,7 +16,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   const handle = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
-  const canRegister = role !== 'buddy';
+  const canRegister = true;
 
   const submit = async () => {
     setError(''); setLoading(true);
@@ -88,11 +88,11 @@ export default function LoginPage() {
             ))}
           </div>
 
-          {role === 'buddy' && (
-            <div style={styles.infoBanner}>
-              🔐 Buddy accounts are invite-only. Use your invite link to register, or sign in below if you already have an account.
-            </div>
-          )}
+          {role === 'buddy' && mode === 'register' && (
+          <div style={styles.infoBanner}>
+            ℹ️ After registering, your account will be reviewed by an admin before you appear in student searches. You can still log in while waiting.
+          </div>
+        )}
 
           {mode === 'register' && (
             <div className="form-group">

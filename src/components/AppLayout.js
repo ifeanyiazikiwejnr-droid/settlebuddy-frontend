@@ -22,6 +22,7 @@ const adminNav = [
   { path: '/', label: 'Dashboard', icon: '🏠' },
   { path: '/accommodations', label: 'Accommodations', icon: '🏡' },
   { path: '/users', label: 'All Users', icon: '👥' },
+  { path: '/pending-buddies', label: 'Pending Buddies', icon: '⏳' },
   { path: '/register-buddy', label: 'Register Buddy', icon: '🤝' },
 ];
 

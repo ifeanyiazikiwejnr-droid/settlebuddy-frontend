@@ -16,6 +16,8 @@ import BuddyRequestsPage from './pages/BuddyRequestsPage';
 import UsersPage from './pages/UsersPage';
 import UserListPage from './pages/UserListPage';
 import AccommodationDetailPage from './pages/AccommodationDetailPage';
+import PendingApprovalPage from './pages/PendingApprovalPage';
+import PendingBuddiesPage from './pages/PendingBuddiesPage';
 import ChatPage from './pages/ChatPage';
 import RegisterBuddyPage from './pages/RegisterBuddyPage';
 import BuddyInvitePage from './pages/BuddyInvitePage';
@@ -25,7 +27,9 @@ import ResetPasswordPage from './pages/ResetPasswordPage';
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <div style={{ padding: '2rem', color: 'var(--text-muted)' }}>Loading...</div>;
-  return user ? children : <Navigate to="/landing" replace />;
+  if (!user) return <Navigate to="/landing" replace />;
+  if (user.role === 'buddy' && user.verified === false) return <PendingApprovalPage />;
+  return children;
 }
 
 function RoleRoute({ roles, children }) {
@@ -77,6 +81,11 @@ function AppRoutes() {
         <Route path="users/:role" element={
           <RoleRoute roles={['admin']}>
             <UserListPage />
+          </RoleRoute>
+        } />
+        <Route path="pending-buddies" element={
+          <RoleRoute roles={['admin']}>
+            <PendingBuddiesPage />
           </RoleRoute>
         } />
         <Route path="register-buddy" element={
