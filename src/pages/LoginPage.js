@@ -67,7 +67,7 @@ export default function LoginPage() {
         <div style={styles.formInner}>
           <div style={{ marginBottom: '2rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
-              <div style={styles.logoMark}>S</div>
+              <img src="/settle-in-buddy-icon.svg" alt="logo" style={{ width: 30, height: 30, borderRadius: 9 }} />
               <span style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.1rem', fontWeight: 700, color: 'var(--green)' }}>Settle-In Buddy</span>
             </div>
             <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.8rem', marginBottom: 6 }}>
