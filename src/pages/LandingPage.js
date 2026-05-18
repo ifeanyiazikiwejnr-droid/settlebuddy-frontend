@@ -17,12 +17,12 @@ export default function LandingPage() {
       <div style={styles.overlay} />
 
       {/* Floating nav */}
-      {/* <nav style={styles.nav}>
+      <nav style={styles.nav}>
         <div style={styles.navLogo}>
           <img src="/settle-in-buddy-icon.svg" alt="logo" style={{ width: 30, height: 30, borderRadius: 9 }} />
           <span style={styles.logoText}>Settle-In Buddy</span>
         </div>
-      </nav> */}
+      </nav>
 
       {/* Hero content */}
       <div style={styles.content}>
