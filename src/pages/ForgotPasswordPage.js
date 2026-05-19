@@ -65,24 +65,14 @@ export default function ForgotPasswordPage() {
               Share this link with the user so they can reset their password. In a future update this will be sent automatically via email.
             </p>
 
-            <div style={styles.linkBox}>
+            <div style={{ background: 'var(--green-light)', border: '1.5px solid #9FE1CB', borderRadius: 12, padding: '1rem', marginBottom: 16, textAlign: 'center' }}>
+              <p style={{ fontSize: 13, color: 'var(--green)', marginBottom: 12, fontWeight: 500 }}>
+                Click the link below to reset the password:
+              </p>
               <a href={result.link} target="_blank" rel="noreferrer"
-                style={{ fontSize: 12, color: 'var(--green)', wordBreak: 'break-all', lineHeight: 1.6, textDecoration: 'underline' }}>
-                {result.link}
-              </a>
-            </div>
-
-            <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
-              <button className="btn-secondary" style={{ flex: 1, padding: '10px', fontSize: 13 }} onClick={() => {
-                navigator.clipboard.writeText(result.link);
-                alert('Link copied! You can now paste it in WhatsApp, email or SMS.');
-              }}>
-                📋 Copy Link
-              </button>
-              <a href={`https://wa.me/?text=${encodeURIComponent('Reset your Settle-In Buddy password by clicking this link:\n\n' + result.link)}`}
-                target="_blank" rel="noreferrer"
-                style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: '#25D366', border: 'none', borderRadius: 50, padding: '10px', fontSize: 13, fontWeight: 600, color: '#fff', textDecoration: 'none', cursor: 'pointer' }}>
-                💬 WhatsApp
+                className="btn-primary"
+                style={{ display: 'inline-block', padding: '12px 28px', fontSize: 14, borderRadius: 50, textDecoration: 'none' }}>
+                Reset Password →
               </a>
             </div>
 
