@@ -19,6 +19,11 @@ export default function ForgotPasswordPage() {
     setLoading(true); setError('');
     try {
       const res = await axios.post('/api/auth/forgot-password', { email });
+      if (!res.data.code) {
+        setError('No account found with that email address. Please check and try again.');
+        setLoading(false);
+        return;
+      }
       setGeneratedCode(res.data.code);
       setStep('code');
     } catch (err) {
