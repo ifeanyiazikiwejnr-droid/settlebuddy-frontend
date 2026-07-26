@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 
 const studentLinks = [
+  { path: '/checklist', icon: '✅', label: 'Arrival Checklist', desc: 'Track your settlement tasks', color: '#0a5c44', bg: 'linear-gradient(135deg,#0a5c44,#0f7a5a)', img: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&q=70' },
   { path: '/accommodations', icon: '🏡', label: 'Accommodations', desc: 'Find your perfect home', color: '#0a5c44', bg: 'linear-gradient(135deg,#0a5c44,#0f7a5a)', img: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=70' },
   { path: '/transport', icon: '🚌', label: 'Transportation', desc: 'Get around the UK', color: '#1a56db', bg: 'linear-gradient(135deg,#1a56db,#3b82f6)', img: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&q=70' },
   { path: '/buddy', icon: '🤝', label: 'Find a Buddy', desc: 'Connect with someone like you', color: '#ff5c3a', bg: 'linear-gradient(135deg,#ff5c3a,#f5a623)', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=70' },

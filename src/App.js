@@ -19,6 +19,7 @@ import AccommodationDetailPage from './pages/AccommodationDetailPage';
 import PendingApprovalPage from './pages/PendingApprovalPage';
 import PendingBuddiesPage from './pages/PendingBuddiesPage';
 import ChatPage from './pages/ChatPage';
+import ChecklistPage from './pages/ChecklistPage';
 import RegisterBuddyPage from './pages/RegisterBuddyPage';
 import BuddyInvitePage from './pages/BuddyInvitePage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
@@ -72,6 +73,11 @@ function AppRoutes() {
         } />
         <Route path="chat" element={
           <ChatPage />
+        } />
+        <Route path="checklist" element={
+          <RoleRoute roles={['student']}>
+            <ChecklistPage />
+          </RoleRoute>
         } />
         <Route path="users" element={
           <RoleRoute roles={['admin']}>
