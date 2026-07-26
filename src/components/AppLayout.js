@@ -6,6 +6,7 @@ import Footer from './Footer';
 const studentNav = [
   { path: '/', label: 'Home', icon: '🏠' },
   { path: '/checklist', label: 'Arrival Checklist', icon: '✅' },
+  { path: '/ai-assistant', label: 'AI Assistant', icon: '🤖' },
   { path: '/accommodations', label: 'Accommodations', icon: '🏡' },
   { path: '/transport', label: 'Transport', icon: '🚌' },
   { path: '/buddy', label: 'Find a Buddy', icon: '🤝' },
