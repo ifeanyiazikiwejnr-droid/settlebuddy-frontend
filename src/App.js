@@ -22,6 +22,7 @@ import ChatPage from './pages/ChatPage';
 import ChecklistPage from './pages/ChecklistPage';
 import AIAssistantPage from './pages/AIAssistantPage';
 import WellbeingPage from './pages/WellbeingPage';
+import DocumentAssistantPage from './pages/DocumentAssistantPage';
 import B2BPage from './pages/B2BPage';
 import RegisterBuddyPage from './pages/RegisterBuddyPage';
 import BuddyInvitePage from './pages/BuddyInvitePage';
@@ -77,6 +78,11 @@ function AppRoutes() {
         } />
         <Route path="chat" element={
           <ChatPage />
+        } />
+        <Route path="documents" element={
+          <RoleRoute roles={['student']}>
+            <DocumentAssistantPage />
+          </RoleRoute>
         } />
         <Route path="wellbeing" element={
           <RoleRoute roles={['student']}>

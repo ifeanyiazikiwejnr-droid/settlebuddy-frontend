@@ -132,3 +132,7 @@ input, select, textarea { font-family: 'Plus Jakarta Sans', sans-serif; }
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
   .bottom-safe { padding-bottom: env(safe-area-inset-bottom); }
 }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

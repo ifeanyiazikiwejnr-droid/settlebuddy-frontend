@@ -8,6 +8,7 @@ const studentNav = [
   { path: '/checklist', label: 'Arrival Checklist', icon: '✅' },
   { path: '/ai-assistant', label: 'AI Assistant', icon: '🤖' },
   { path: '/wellbeing', label: 'Wellbeing', icon: '💚' },
+  { path: '/documents', label: 'Document Help', icon: '📄' },
   { path: '/accommodations', label: 'Accommodations', icon: '🏡' },
   { path: '/transport', label: 'Transport', icon: '🚌' },
   { path: '/buddy', label: 'Find a Buddy', icon: '🤝' },
