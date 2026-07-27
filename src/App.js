@@ -22,6 +22,7 @@ import ChatPage from './pages/ChatPage';
 import ChecklistPage from './pages/ChecklistPage';
 import AIAssistantPage from './pages/AIAssistantPage';
 import WellbeingPage from './pages/WellbeingPage';
+import B2BPage from './pages/B2BPage';
 import RegisterBuddyPage from './pages/RegisterBuddyPage';
 import BuddyInvitePage from './pages/BuddyInvitePage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
@@ -48,6 +49,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/landing" element={<LandingPage />} />
+      <Route path="/partners" element={<B2BPage />} />
       <Route path="/login" element={user ? <Navigate to="/" replace /> : <LoginPage />} />
       <Route path="/register-buddy/:token" element={<BuddyInvitePage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />

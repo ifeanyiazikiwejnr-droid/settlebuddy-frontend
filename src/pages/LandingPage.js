@@ -56,6 +56,10 @@ export default function LandingPage() {
             onClick={() => navigate('/login')}>
             Sign In
           </button>
+          <button style={{ ...styles.loginBtn, background: 'rgba(255,255,255,0.08)', fontSize: 13 }}
+            onClick={() => navigate('/partners')}>
+            🏢 Partner with Us
+          </button>
         </div>
 
         {/* Stats */}
