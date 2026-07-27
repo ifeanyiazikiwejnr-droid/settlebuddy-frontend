@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 
 const studentLinks = [
+  { path: '/wellbeing', icon: '💚', label: 'Wellbeing', desc: 'Mental health, cultural tips & emergency contacts', color: '#059669', bg: 'linear-gradient(135deg,#059669,#10b981)', img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&q=70' },
   { path: '/checklist', icon: '✅', label: 'Arrival Checklist', desc: 'Track your settlement tasks', color: '#0a5c44', bg: 'linear-gradient(135deg,#0a5c44,#0f7a5a)', img: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&q=70' },
   { path: '/ai-assistant', icon: '🤖', label: 'AI Assistant', desc: 'Ask anything about UK student life', color: '#185fa5', bg: 'linear-gradient(135deg,#185fa5,#3b82f6)', img: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&q=70' },
   { path: '/accommodations', icon: '🏡', label: 'Accommodations', desc: 'Find your perfect home', color: '#0a5c44', bg: 'linear-gradient(135deg,#0a5c44,#0f7a5a)', img: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=70' },

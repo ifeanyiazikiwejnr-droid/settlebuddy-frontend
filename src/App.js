@@ -21,6 +21,7 @@ import PendingBuddiesPage from './pages/PendingBuddiesPage';
 import ChatPage from './pages/ChatPage';
 import ChecklistPage from './pages/ChecklistPage';
 import AIAssistantPage from './pages/AIAssistantPage';
+import WellbeingPage from './pages/WellbeingPage';
 import RegisterBuddyPage from './pages/RegisterBuddyPage';
 import BuddyInvitePage from './pages/BuddyInvitePage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
@@ -74,6 +75,11 @@ function AppRoutes() {
         } />
         <Route path="chat" element={
           <ChatPage />
+        } />
+        <Route path="wellbeing" element={
+          <RoleRoute roles={['student']}>
+            <WellbeingPage />
+          </RoleRoute>
         } />
         <Route path="ai-assistant" element={
           <RoleRoute roles={['student']}>
