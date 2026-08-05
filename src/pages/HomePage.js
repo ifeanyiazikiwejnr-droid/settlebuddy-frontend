@@ -5,6 +5,7 @@ import axios from 'axios';
 
 const studentLinks = [
   { path: '/wellbeing', icon: '💚', label: 'Wellbeing', desc: 'Mental health, cultural tips & emergency contacts', color: '#059669', bg: 'linear-gradient(135deg,#059669,#10b981)', img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&q=70' },
+  { path: '/upgrade', icon: '⭐', label: 'Go Premium', desc: 'Unlock buddy matching and chat', color: '#d97706', bg: 'linear-gradient(135deg,#f5a623,#f07020)', img: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&q=70' },
   { path: '/ai-assistant', icon: '🤖', label: 'AI Assistant', desc: 'Ask anything about UK student life', color: '#185fa5', bg: 'linear-gradient(135deg,#185fa5,#3b82f6)', img: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&q=70' },
   { path: '/documents', icon: '📄', label: 'Document Help', desc: 'Upload and understand your documents', color: '#7c3aed', bg: 'linear-gradient(135deg,#7c3aed,#a855f7)', img: 'https://images.unsplash.com/photo-1568667256549-094345857637?w=400&q=70' },
   { path: '/checklist', icon: '✅', label: 'Arrival Checklist', desc: 'Track your settlement tasks', color: '#0a5c44', bg: 'linear-gradient(135deg,#0a5c44,#0f7a5a)', img: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&q=70' },

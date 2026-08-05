@@ -23,6 +23,9 @@ import ChecklistPage from './pages/ChecklistPage';
 import AIAssistantPage from './pages/AIAssistantPage';
 import WellbeingPage from './pages/WellbeingPage';
 import DocumentAssistantPage from './pages/DocumentAssistantPage';
+import UpgradePage from './pages/UpgradePage';
+import PremiumUsersPage from './pages/PremiumUsersPage';
+import PremiumGate from './components/PremiumGate';
 import B2BPage from './pages/B2BPage';
 import RegisterBuddyPage from './pages/RegisterBuddyPage';
 import BuddyInvitePage from './pages/BuddyInvitePage';
@@ -49,23 +52,49 @@ function AppRoutes() {
 
   return (
     <Routes>
-      <Route path="/landing" element={<LandingPage />} />
-      <Route path="/partners" element={<B2BPage />} />
-      <Route path="/login" element={user ? <Navigate to="/" replace /> : <LoginPage />} />
-      <Route path="/register-buddy/:token" element={<BuddyInvitePage />} />
-      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-      <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
-      <Route path="/" element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
-        <Route index element={<HomePage />} />
-        <Route path="accommodations" element={<AccommodationsPage />} /><Route path="accommodations/:id" element={<AccommodationDetailPage />} />
-        <Route path="transport" element={<TransportPage />} />
+      <Route path="/landing" element={
+        <LandingPage />
+        } />
+      <Route path="/partners" element={
+        <B2BPage />
+        } />
+      <Route path="/login" element={
+        user ? <Navigate to="/" replace /> : <LoginPage />
+        } />
+      <Route path="/register-buddy/:token" element={
+        <BuddyInvitePage />
+        } />
+      <Route path="/forgot-password" element={
+        <ForgotPasswordPage />
+        } />
+      <Route path="/reset-password/:token" element={
+        <ResetPasswordPage />
+        } />
+      <Route path="/" element={
+        <ProtectedRoute><AppLayout /></ProtectedRoute>
+        }>
+        <Route index element={
+          <HomePage />
+          } />
+        <Route path="accommodations" element={
+          <PremiumGate><AccommodationsPage /></PremiumGate>
+        } /><Route path="accommodations/:id" element={
+        <AccommodationDetailPage />
+        } />
+        <Route path="transport" element={
+          <TransportPage />
+          } />
         <Route path="buddy" element={
           <RoleRoute roles={['student']}>
-            <FindBuddyPage />
+            <PremiumGate><FindBuddyPage /></PremiumGate>
           </RoleRoute>
         } />
-        <Route path="jobs" element={<JobsPage />} />
-        <Route path="how-it-works" element={<HowItWorksPage />} />
+        <Route path="jobs" element={
+          <JobsPage />
+          } />
+        <Route path="how-it-works" element={
+          <HowItWorksPage />
+          } />
         <Route path="my-profile" element={
           <RoleRoute roles={['buddy']}>
             <BuddyProfilePage />
@@ -77,7 +106,19 @@ function AppRoutes() {
           </RoleRoute>
         } />
         <Route path="chat" element={
-          <ChatPage />
+          <RoleRoute roles={['student', 'buddy']}>
+            <PremiumGate><ChatPage /></PremiumGate>
+          </RoleRoute>
+        } />
+        <Route path="upgrade" element={
+          <RoleRoute roles={['student']}>
+            <UpgradePage />
+          </RoleRoute>
+        } />
+        <Route path="premium-users" element={
+          <RoleRoute roles={['admin']}>
+            <PremiumUsersPage />
+          </RoleRoute>
         } />
         <Route path="documents" element={
           <RoleRoute roles={['student']}>

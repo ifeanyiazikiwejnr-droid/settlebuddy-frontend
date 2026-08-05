@@ -5,6 +5,7 @@ import Footer from './Footer';
 
 const studentNav = [
   { path: '/', label: 'Home', icon: '🏠' },
+  { path: '/upgrade', label: 'Go Premium', icon: '⭐' },
   { path: '/checklist', label: 'Arrival Checklist', icon: '✅' },
   { path: '/ai-assistant', label: 'AI Assistant', icon: '🤖' },
   { path: '/wellbeing', label: 'Wellbeing', icon: '💚' },
@@ -26,6 +27,7 @@ const adminNav = [
   { path: '/', label: 'Dashboard', icon: '🏠' },
   { path: '/accommodations', label: 'Accommodations', icon: '🏡' },
   { path: '/users', label: 'All Users', icon: '👥' },
+  { path: '/premium-users', label: 'Premium Users', icon: '⭐' },
   { path: '/pending-buddies', label: 'Pending Buddies', icon: '⏳' },
   { path: '/register-buddy', label: 'Register Buddy', icon: '🤝' },
 ];
