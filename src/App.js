@@ -77,8 +77,9 @@ function AppRoutes() {
           <HomePage />
           } />
         <Route path="accommodations" element={
-          <PremiumGate><AccommodationsPage /></PremiumGate>
-        } /><Route path="accommodations/:id" element={
+          <AccommodationsPage />
+          } />
+        <Route path="accommodations/:id" element={
         <AccommodationDetailPage />
         } />
         <Route path="transport" element={
