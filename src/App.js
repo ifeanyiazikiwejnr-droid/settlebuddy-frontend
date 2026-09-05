@@ -22,6 +22,7 @@ import ChatPage from './pages/ChatPage';
 import ChecklistPage from './pages/ChecklistPage';
 import AIAssistantPage from './pages/AIAssistantPage';
 import WellbeingPage from './pages/WellbeingPage';
+import CompliancePage from './pages/CompliancePage';
 import DocumentAssistantPage from './pages/DocumentAssistantPage';
 import UpgradePage from './pages/UpgradePage';
 import PremiumUsersPage from './pages/PremiumUsersPage';
@@ -124,6 +125,11 @@ function AppRoutes() {
         <Route path="documents" element={
           <RoleRoute roles={['student']}>
             <DocumentAssistantPage />
+          </RoleRoute>
+        } />
+        <Route path="compliance" element={
+          <RoleRoute roles={['student']}>
+            <CompliancePage />
           </RoleRoute>
         } />
         <Route path="wellbeing" element={
