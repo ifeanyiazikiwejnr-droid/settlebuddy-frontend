@@ -40,8 +40,8 @@ export default function DocumentAssistantPage() {
       setError('Please upload a JPG, PNG, WebP or PDF file.');
       return;
     }
-    if (f.size > 10 * 1024 * 1024) {
-      setError('File must be under 10MB.');
+    if (f.size > 5 * 1024 * 1024) {
+      setError('File must be under 5MB. Try compressing the image or taking a clearer photo.');
       return;
     }
     setError('');
