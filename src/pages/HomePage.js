@@ -80,19 +80,23 @@ export default function HomePage() {
         <div className="section-title">Quick Access</div>
         <div style={styles.cardGrid}>
           {quickLinks.map((q, i) => (
-            <div key={`link-${i}`} onClick={() => navigate(q.path)}
+            <div key={`link-${i}`}
+              onClick={() => navigate(q.path)}
               style={{ ...styles.featureCard, animationDelay: `${i * 0.08}s` }}
               className="card-hover animate-fade-up">
-              <div style={{ ...styles.featureImg, background: q.bg }}>
-                <img src={q.img} alt={q.label}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, mixBlendMode: 'multiply' }} />
-                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', padding: '0 2rem', gap: 16 }}>
-                  <div style={{ fontSize: 32 }}>{q.icon}</div>
-                  <div>
-                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.2rem', fontWeight: 700, color: '#fff' }}>{q.label}</div>
-                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.85)', marginTop: 2 }}>{q.desc}</div>
+              <div style={{ ...styles.featureImg, background: q.bg, position: 'relative', overflow: 'hidden' }}>
+                <img
+                  src={q.img}
+                  alt=""
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, mixBlendMode: 'multiply' }}
+                />
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', padding: '0 1.5rem', gap: 14 }}>
+                  <span style={{ fontSize: 30, flexShrink: 0, lineHeight: 1 }}>{q.icon}</span>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.15rem', fontWeight: 700, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{q.label}</div>
+                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.82)', marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{q.desc}</div>
                   </div>
-                  <div style={{ marginLeft: 'auto', color: 'rgba(255,255,255,0.7)', fontSize: 22 }}>→</div>
+                  <div style={{ marginLeft: 'auto', color: 'rgba(255,255,255,0.7)', fontSize: 20, flexShrink: 0 }}>→</div>
                 </div>
               </div>
             </div>
@@ -190,7 +194,7 @@ const styles = {
   heroContent: { position: 'relative', zIndex: 1, padding: '1.75rem 2rem', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' },
   heroBadge: { display: 'inline-block', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', color: '#fff', padding: '5px 14px', borderRadius: 50, fontSize: 11, fontWeight: 700, marginBottom: 10, border: '1px solid rgba(255,255,255,0.25)' },
   cardGrid: { display: 'flex', flexDirection: 'column', gap: '1rem' },
-  featureCard: { borderRadius: 20, overflow: 'hidden', cursor: 'pointer', border: 'none', background: 'transparent', width: '100%' },
+  featureCard: { borderRadius: 20, overflow: 'hidden', cursor: 'pointer', border: 'none', background: 'transparent', width: '100%', position: 'relative' },
   featureImg: { height: 110, position: 'relative', borderRadius: 20, overflow: 'hidden', width: '100%' },
   infoStrip: { display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: '1.5rem', background: '#fff', borderRadius: 16, padding: '1rem 1.25rem', border: '1px solid var(--border)' },
   infoItem: { display: 'flex', alignItems: 'center', gap: 8 },
