@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const TERM_LIMIT = 20;
 const HOLIDAY_LIMIT = 40;
@@ -31,6 +32,7 @@ export default function CompliancePage() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const navigate = useNavigate();
 
   // Hours form
   const [weekStart, setWeekStart] = useState(getMonday(new Date()));
@@ -485,6 +487,10 @@ export default function CompliancePage() {
                 </div>
               </div>
             ))}
+            <button className="btn-primary" style={{ width: '100%', padding: '11px', fontSize: 13, marginTop: '1rem' }}
+              onClick={() => navigate('/graduate-visa')}>
+              📖 Full Graduate Visa Guide →
+            </button>
             <a href="https://www.gov.uk/graduate-visa" target="_blank" rel="noreferrer"
               style={{ display: 'block', marginTop: '1rem', textAlign: 'center', fontSize: 13, fontWeight: 700, color: 'var(--green)', textDecoration: 'none' }}>
               Full details on gov.uk →

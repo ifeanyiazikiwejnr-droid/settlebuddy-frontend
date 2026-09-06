@@ -7,6 +7,8 @@ const studentNav = [
   { path: '/', label: 'Home', icon: '🏠' },
   { path: '/upgrade', label: 'Go Premium', icon: '⭐' },
   { path: '/checklist', label: 'Arrival Checklist', icon: '✅' },
+  { path: '/compliance', label: 'Compliance Planner', icon: '📋' },
+  { path: '/graduate-visa', label: 'Graduate Visa', icon: '🎓' },
   { path: '/ai-assistant', label: 'AI Assistant', icon: '🤖' },
   { path: '/wellbeing', label: 'Wellbeing', icon: '💚' },
   { path: '/documents', label: 'Document Help', icon: '📄' },

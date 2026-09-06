@@ -51,7 +51,20 @@ export default function UpgradePage() {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.post('/api/stripe/create-checkout');
+      const token = localStorage.getItem('sib_token');
+      if (!token) {
+        setError('You must be logged in to upgrade.');
+        setLoading(false);
+        return;
+      }
+      const res = await axios.post('/api/stripe/create-checkout', {}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.data.url) {
+        setError('No checkout URL returned. Please try again.');
+        setLoading(false);
+        return;
+      }
       window.location.href = res.data.url;
     } catch (err) {
       setError(err.response?.data?.error || 'Something went wrong. Please try again.');
@@ -62,7 +75,10 @@ export default function UpgradePage() {
   const handleManageBilling = async () => {
     setPortalLoading(true);
     try {
-      const res = await axios.post('/api/stripe/create-portal');
+      const token = localStorage.getItem('sib_token');
+      const res = await axios.post('/api/stripe/create-portal', {}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       window.location.href = res.data.url;
     } catch (err) {
       setError('Could not open billing portal. Please try again.');
@@ -87,13 +103,9 @@ export default function UpgradePage() {
               <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>£4.99/month · Cancel anytime</div>
             </div>
           </div>
-          <button className="btn-primary" style={{ width: '100%', padding: 13, marginBottom: 10 }}
-            onClick={() => navigate('/buddy')}>
-            Find a Buddy →
-          </button>
-          <button className="btn-outline" style={{ width: '100%', padding: 11 }}
+         <button className="btn-primary" style={{ width: '100%', padding: 13 }}
             onClick={() => navigate('/')}>
-            Go to Dashboard
+            Go to Dashboard →
           </button>
         </div>
       </div>

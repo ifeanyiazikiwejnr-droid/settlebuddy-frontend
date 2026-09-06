@@ -23,6 +23,7 @@ import ChecklistPage from './pages/ChecklistPage';
 import AIAssistantPage from './pages/AIAssistantPage';
 import WellbeingPage from './pages/WellbeingPage';
 import CompliancePage from './pages/CompliancePage';
+import GraduateVisaPage from './pages/GraduateVisaPage';
 import DocumentAssistantPage from './pages/DocumentAssistantPage';
 import UpgradePage from './pages/UpgradePage';
 import PremiumUsersPage from './pages/PremiumUsersPage';
@@ -125,6 +126,11 @@ function AppRoutes() {
         <Route path="documents" element={
           <RoleRoute roles={['student']}>
             <DocumentAssistantPage />
+          </RoleRoute>
+        } />
+        <Route path="graduate-visa" element={
+          <RoleRoute roles={['student']}>
+            <GraduateVisaPage />
           </RoleRoute>
         } />
         <Route path="compliance" element={
