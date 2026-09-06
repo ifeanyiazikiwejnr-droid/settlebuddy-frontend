@@ -80,7 +80,7 @@ export default function HomePage() {
         <div className="section-title">Quick Access</div>
         <div style={styles.cardGrid}>
           {quickLinks.map((q, i) => (
-            <div key={q.path} onClick={() => navigate(q.path)}
+            <div key={`link-${i}`} onClick={() => navigate(q.path)}
               style={{ ...styles.featureCard, animationDelay: `${i * 0.08}s` }}
               className="card-hover animate-fade-up">
               <div style={{ ...styles.featureImg, background: q.bg }}>
