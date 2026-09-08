@@ -10,6 +10,7 @@ export default function LoginPage() {
   const [mode, setMode] = useState(searchParams.get('mode') === 'register' ? 'register' : 'login');
   const [role, setRole] = useState('student');
   const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
@@ -104,10 +105,28 @@ export default function LoginPage() {
             <label>Email Address</label>
             <input name="email" type="email" placeholder="you@email.com" value={form.email} onChange={handle} />
           </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input name="password" type="password" placeholder="••••••••" value={form.password} onChange={handle}
-              onKeyDown={e => e.key === 'Enter' && submit()} />
+          <div style={{ position: 'relative' }}>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder="Password"
+              style={{ ...inputStyle, paddingRight: 44 }}
+              onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(p => !p)}
+              style={{
+                position: 'absolute', right: 12, top: '50%',
+                transform: 'translateY(-50%)',
+                background: 'none', border: 'none',
+                cursor: 'pointer', fontSize: 18,
+                color: 'var(--text-muted)', padding: 4,
+                lineHeight: 1,
+              }}>
+              {showPassword ? '🙈' : '👁️'}
+            </button>
           </div>
 
           {error && (
