@@ -52,6 +52,12 @@ function RoleRoute({ roles, children }) {
 function AppRoutes() {
   const { user } = useAuth();
 
+function ChatWithGate() {
+  const { user } = useAuth();
+  if (user?.role === 'buddy') return <ChatPage />;
+  return <PremiumGate><ChatPage /></PremiumGate>;
+}
+
   return (
     <Routes>
       <Route path="/landing" element={
@@ -110,7 +116,7 @@ function AppRoutes() {
         } />
         <Route path="chat" element={
           <RoleRoute roles={['student', 'buddy']}>
-            <PremiumGate><ChatPage /></PremiumGate>
+            <ChatWithGate />
           </RoleRoute>
         } />
         <Route path="upgrade" element={
@@ -178,6 +184,7 @@ function AppRoutes() {
     </Routes>
   );
 }
+
 
 export default function App() {
   return (

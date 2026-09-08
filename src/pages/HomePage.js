@@ -125,42 +125,43 @@ export default function HomePage() {
           ) : (
             <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 20, overflow: 'hidden' }}>
               {matches.map((student, index) => (
-                <div key={student.id} style={{
+                                <div key={student.id} style={{
                   display: 'flex',
-                  alignItems: 'center',
-                  gap: 14,
-                  padding: '14px 18px',
+                  flexDirection: 'column',
+                  gap: 10,
+                  padding: '14px 16px',
                   borderTop: index === 0 ? 'none' : '1px solid var(--border)',
-                  transition: 'background .15s',
                 }}>
-                  {/* Avatar */}
-                  <div style={{
-                    width: 46, height: 46, borderRadius: '50%',
-                    background: 'linear-gradient(135deg,var(--green),var(--green-mid))',
-                    color: '#fff', display: 'flex', alignItems: 'center',
-                    justifyContent: 'center', fontWeight: 700, fontSize: 16, flexShrink: 0,
-                  }}>
-                    {student.name.charAt(0).toUpperCase()}
-                  </div>
-
-                  {/* Info */}
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 600, fontSize: 14 }}>{student.name}</div>
-                    <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{student.email}</div>
-                    <div style={{ fontSize: 11, color: 'var(--text-faint)', marginTop: 2 }}>
-                      Matched {new Date(student.matched_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  {/* Top row — avatar + info + badge */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <div style={{
+                      width: 42, height: 42, borderRadius: '50%',
+                      background: 'linear-gradient(135deg,var(--green),var(--green-mid))',
+                      color: '#fff', display: 'flex', alignItems: 'center',
+                      justifyContent: 'center', fontWeight: 700, fontSize: 15, flexShrink: 0,
+                    }}>
+                      {student.name.charAt(0).toUpperCase()}
                     </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontWeight: 600, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {student.name}
+                      </div>
+                      <div style={{ fontSize: 11, color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {student.email}
+                      </div>
+                      <div style={{ fontSize: 11, color: 'var(--text-faint)', marginTop: 2 }}>
+                        Matched {new Date(student.matched_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      </div>
+                    </div>
+                    <span className="badge badge-green" style={{ flexShrink: 0 }}>Active</span>
                   </div>
 
-                  {/* Active badge */}
-                  <span className="badge badge-green">Active</span>
-
-                  {/* Chat button */}
+                  {/* Bottom row — chat button full width */}
                   <button
                     className="btn-primary"
-                    style={{ padding: '8px 18px', fontSize: 13, flexShrink: 0 }}
+                    style={{ width: '100%', padding: '10px', fontSize: 13 }}
                     onClick={() => navigate('/chat')}>
-                    💬 Chat
+                    💬 Chat with {student.name.split(' ')[0]}
                   </button>
                 </div>
               ))}
