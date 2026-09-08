@@ -101,31 +101,39 @@ export default function LoginPage() {
               <input name="name" placeholder="Your full name" value={form.name} onChange={handle} />
             </div>
           )}
-          <div className="form-group" style={{ position: 'relative' }}>
-            <label>Password</label>
-            <input
-              name="password"
-              type={showPassword ? 'text' : 'password'}
-              value={form.password}
-              onChange={handle}
-              placeholder="Your password"
-              style={{ paddingRight: 44 }}
-              onKeyDown={e => e.key === 'Enter' && submit()}
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(p => !p)}
-              style={{
-                position: 'absolute', right: 12, bottom: 11,
-                background: 'none', border: 'none',
-                cursor: 'pointer', fontSize: 18,
-                color: 'var(--text-muted)', padding: 4,
-                lineHeight: 1,
-              }}>
-              {showPassword ? '🙈' : '👁️'}
-            </button>
+
+          <div className="form-group">
+            <label>Email Address</label>
+            <input name="email" type="email" placeholder="you@email.com" value={form.email} onChange={handle} />
           </div>
 
+          <div className="form-group">
+            <label>Password</label>
+            <div style={{ position: 'relative' }}>
+              <input
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                value={form.password}
+                onChange={handle}
+                placeholder="Your password"
+                style={{ paddingRight: 44, width: '100%', boxSizing: 'border-box' }}
+                onKeyDown={e => e.key === 'Enter' && submit()}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(p => !p)}
+                style={{
+                  position: 'absolute', right: 12, top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none', border: 'none',
+                  cursor: 'pointer', fontSize: 18,
+                  color: 'var(--text-muted)', padding: 4,
+                  lineHeight: 1,
+                }}>
+                {showPassword ? '🙈' : '👁️'}
+              </button>
+            </div>
+          </div>
           {error && (
             <div style={styles.errorBox}>{error}</div>
           )}
