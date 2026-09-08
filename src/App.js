@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import './index.css';
 
 import LoginPage from './pages/LoginPage';
@@ -56,6 +58,14 @@ function ChatWithGate() {
   const { user } = useAuth();
   if (user?.role === 'buddy') return <ChatPage />;
   return <PremiumGate><ChatPage /></PremiumGate>;
+}
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
 }
 
   return (
@@ -190,6 +200,7 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <AppRoutes />
       </BrowserRouter>
     </AuthProvider>
