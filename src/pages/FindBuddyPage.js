@@ -75,15 +75,20 @@ export default function FindBuddyPage() {
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: 800, margin: '0 auto', width: '100%' }}>
+
       {/* Header */}
       <div style={styles.heroBanner}>
         <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1000&q=80"
           alt="buddies" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
         <div style={styles.heroOverlay} />
         <div style={styles.heroContent}>
-          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: '2rem', color: '#fff', marginBottom: 6 }}>Find a Buddy</h2>
-          <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: 14 }}>Connect with someone who speaks your language and understands your journey</p>
+          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(1.4rem,4vw,2rem)', color: '#fff', marginBottom: 6 }}>
+            Find a Buddy
+          </h2>
+          <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: 13, lineHeight: 1.5 }}>
+            Connect with someone who speaks your language and understands your journey
+          </p>
         </div>
       </div>
 
@@ -94,9 +99,9 @@ export default function FindBuddyPage() {
           background: myStatus.status === 'accepted' ? 'var(--green-light)' : 'var(--amber-light)',
           borderColor: myStatus.status === 'accepted' ? '#9FE1CB' : '#f5a623',
         }}>
-          {/* Top row — icon + name */}
+          {/* Top row */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div style={{ fontSize: '1.8rem', flexShrink: 0 }}>
+            <div style={{ fontSize: '1.6rem', flexShrink: 0 }}>
               {myStatus.status === 'accepted' ? '🤝' : '⏳'}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
@@ -105,7 +110,7 @@ export default function FindBuddyPage() {
                   <div style={{ fontWeight: 700, color: 'var(--green)', fontSize: 14, marginBottom: 2 }}>
                     Matched with {myStatus.buddy_name}!
                   </div>
-                  <div style={{ fontSize: 12, color: '#085041' }}>
+                  <div style={{ fontSize: 12, color: '#085041', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {myStatus.university} · {myStatus.origin}
                   </div>
                 </>
@@ -133,9 +138,10 @@ export default function FindBuddyPage() {
 
           {/* Action buttons */}
           {myStatus.status === 'accepted' && (
-            <div style={{ display: 'flex', gap: 8 }}>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {myStatus.conversation_id && (
-                <button className="btn-primary" style={{ flex: 1, padding: '10px', fontSize: 13 }}
+                <button className="btn-primary"
+                  style={{ flex: 1, padding: '10px', fontSize: 13, minHeight: 44 }}
                   onClick={() => navigate('/chat')}>
                   💬 Chat
                 </button>
@@ -151,10 +157,10 @@ export default function FindBuddyPage() {
       {/* Block searching if already matched or pending */}
       {!statusLoading && myStatus ? (
         <div style={styles.blockedNote}>
-          <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>
+          <div style={{ fontSize: '2.5rem', marginBottom: 8 }}>
             {myStatus.status === 'accepted' ? '✅' : '⏳'}
           </div>
-          <p style={{ fontWeight: 600, marginBottom: 4 }}>
+          <p style={{ fontWeight: 600, marginBottom: 4, fontSize: 15 }}>
             {myStatus.status === 'accepted'
               ? 'You already have an active buddy'
               : 'You have a pending request'}
@@ -165,7 +171,7 @@ export default function FindBuddyPage() {
               : `Your request to ${myStatus.buddy_name} is pending. You cannot request another buddy until this is resolved.`}
           </p>
           {myStatus.status === 'accepted' && (
-            <button style={styles.unmatchBtn} onClick={unmatch}>
+            <button style={{ ...styles.unmatchBtn, width: '100%' }} onClick={unmatch}>
               Unmatch from {myStatus.buddy_name}
             </button>
           )}
@@ -175,24 +181,42 @@ export default function FindBuddyPage() {
           {/* Search */}
           <div style={styles.searchWrap}>
             <div style={styles.searchBox}>
-              <span style={{ fontSize: 18 }}>🔍</span>
-              <input value={search} onChange={e => setSearch(e.target.value)}
+              <span style={{ fontSize: 16, flexShrink: 0 }}>🔍</span>
+              <input
+                value={search}
+                onChange={e => setSearch(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && load(search)}
-                placeholder="Search by language e.g. Yoruba, Arabic, Hindi..."
-                style={{ flex: 1, border: 'none', outline: 'none', fontSize: 14, background: 'transparent', fontFamily: "'Plus Jakarta Sans',sans-serif" }} />
+                placeholder="Search by language..."
+                style={{
+                  flex: 1, border: 'none', outline: 'none',
+                  fontSize: 14, background: 'transparent',
+                  fontFamily: "'Plus Jakarta Sans',sans-serif",
+                  minWidth: 0,
+                }}
+              />
               {search && (
                 <button onClick={() => { setSearch(''); load(''); }}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', fontSize: 18 }}>✕</button>
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', fontSize: 16, flexShrink: 0, padding: 2 }}>
+                  ✕
+                </button>
               )}
             </div>
-            <button className="btn-secondary" onClick={() => load(search)}>Search</button>
+            <button className="btn-secondary"
+              style={{ flexShrink: 0, padding: '10px 16px', fontSize: 13, minHeight: 44 }}
+              onClick={() => load(search)}>
+              Search
+            </button>
           </div>
 
-          {loading && <p style={{ color: 'var(--text-muted)', fontSize: 14, padding: '1rem 0' }}>Finding buddies...</p>}
+          {loading && (
+            <p style={{ color: 'var(--text-muted)', fontSize: 14, padding: '1rem 0' }}>
+              Finding buddies...
+            </p>
+          )}
 
           {!loading && buddies.length === 0 && (
             <div style={styles.emptyState}>
-              <div style={{ fontSize: '3rem', marginBottom: 12 }}>🤝</div>
+              <div style={{ fontSize: '2.5rem', marginBottom: 12 }}>🤝</div>
               <h3 style={{ fontFamily: "'Playfair Display',serif", marginBottom: 6 }}>No buddies found</h3>
               <p style={{ fontSize: 14, color: 'var(--text-muted)' }}>
                 {search ? `No results for "${search}"` : 'No buddies available yet'}
@@ -200,31 +224,54 @@ export default function FindBuddyPage() {
             </div>
           )}
 
+          {/* Buddy grid — single column on mobile, 2 col on wider screens */}
           <div style={styles.buddyGrid}>
             {buddies.map((b, i) => {
               const initials = b.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
               return (
                 <div key={b.id} className="card card-hover" style={styles.buddyCard}>
+                  {/* Card top colour band */}
                   <div style={{ ...styles.cardTop, background: avatarColors[i % avatarColors.length] }}>
                     <div style={styles.avatar}>{initials}</div>
                     <span style={{ ...styles.statusDot, background: b.available ? '#22c55e' : '#f59e0b' }} />
                   </div>
+
+                  {/* Card body */}
                   <div style={styles.cardBody}>
-                    <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.1rem', marginBottom: 2 }}>{b.name}</h3>
-                    <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 10 }}>
-                      {b.origin} · {b.university}
+                    <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.05rem', marginBottom: 2 }}>
+                      {b.name}
+                    </h3>
+                    <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 8, lineHeight: 1.4 }}>
+                      {[b.origin, b.university].filter(Boolean).join(' · ')}
                     </p>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 10 }}>
-                      {(b.languages || []).map(l => (
-                        <span key={l} className="badge badge-green">{l}</span>
-                      ))}
-                    </div>
-                    <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: 14, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                      {b.bio}
-                    </p>
+
+                    {/* Language badges */}
+                    {(b.languages || []).length > 0 && (
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 8 }}>
+                        {(b.languages || []).map(l => (
+                          <span key={l} className="badge badge-green">{l}</span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Bio */}
+                    {b.bio && (
+                      <p style={{
+                        fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6,
+                        marginBottom: 14,
+                        display: '-webkit-box', WebkitLineClamp: 3,
+                        WebkitBoxOrient: 'vertical', overflow: 'hidden',
+                      }}>
+                        {b.bio}
+                      </p>
+                    )}
+
+                    {/* CTA */}
                     {b.available ? (
-                      <button className="btn-primary" style={{ width: '100%', padding: '10px' }}
-                        onClick={() => request(b.id, b.name)} disabled={requesting[b.id]}>
+                      <button className="btn-primary"
+                        style={{ width: '100%', padding: '11px', fontSize: 13, minHeight: 44 }}
+                        onClick={() => request(b.id, b.name)}
+                        disabled={requesting[b.id]}>
                         {requesting[b.id] ? 'Sending...' : 'Request this buddy →'}
                       </button>
                     ) : (
@@ -237,26 +284,130 @@ export default function FindBuddyPage() {
           </div>
         </>
       )}
-    <ConfirmModal {...modal} />
+
+      <ConfirmModal {...modal} />
     </div>
   );
 }
 
 const styles = {
-  heroBanner: { borderRadius: 24, overflow: 'hidden', position: 'relative', height: 180, marginBottom: '1.5rem' },
-  heroOverlay: { position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(255,92,58,0.85) 0%, rgba(10,92,68,0.7) 100%)' },
-  heroContent: { position: 'relative', zIndex: 1, padding: '1.5rem 2rem', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' },
-  statusBanner: { borderRadius: 16, border: '1.5px solid', padding: '1rem', marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: 12 },
-  blockedNote: { background: '#fff', border: '1px solid var(--border)', borderRadius: 20, padding: '2.5rem', textAlign: 'center' },
-  searchWrap: { display: 'flex', gap: 10, marginBottom: '1.5rem', alignItems: 'center' },
-  searchBox: { flex: 1, display: 'flex', alignItems: 'center', gap: 10, background: '#fff', border: '2px solid var(--border)', borderRadius: 50, padding: '10px 18px', boxShadow: 'var(--shadow-sm)' },
-  buddyGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.25rem' },
-  buddyCard: { padding: 0, overflow: 'hidden', border: '1px solid var(--border)' },
-  cardTop: { height: 90, position: 'relative', display: 'flex', alignItems: 'flex-end', padding: '0 1.25rem 0' },
-  avatar: { width: 60, height: 60, borderRadius: '50%', background: 'rgba(255,255,255,0.25)', backdropFilter: 'blur(8px)', border: '3px solid rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, fontSize: 20, transform: 'translateY(30px)', boxShadow: '0 4px 14px rgba(0,0,0,0.2)' },
-  statusDot: { width: 14, height: 14, borderRadius: '50%', border: '2px solid #fff', position: 'absolute', bottom: -8, left: 68, boxShadow: '0 2px 6px rgba(0,0,0,0.2)' },
-  cardBody: { padding: '2rem 1.25rem 1.25rem' },
-  busyBtn: { width: '100%', padding: '10px', background: 'var(--cream-dark)', borderRadius: 50, textAlign: 'center', fontSize: 13, fontWeight: 600, color: 'var(--text-muted)' },
-  emptyState: { textAlign: 'center', padding: '4rem 2rem', background: '#fff', borderRadius: 24, border: '1px solid var(--border)' },
-  unmatchBtn: { background: 'var(--coral-light)', border: '1.5px solid var(--coral)', borderRadius: 50, padding: '8px 18px', fontSize: 13, fontWeight: 700, color: 'var(--coral-dark)', cursor: 'pointer', fontFamily: "'Plus Jakarta Sans',sans-serif", minHeight: 44 },
+  heroBanner: {
+    borderRadius: 20,
+    overflow: 'hidden',
+    position: 'relative',
+    height: 160,
+    marginBottom: '1.25rem',
+  },
+  heroOverlay: {
+    position: 'absolute', inset: 0,
+    background: 'linear-gradient(135deg, rgba(255,92,58,0.85) 0%, rgba(10,92,68,0.7) 100%)',
+  },
+  heroContent: {
+    position: 'relative', zIndex: 1,
+    padding: '1.25rem 1.5rem',
+    height: '100%',
+    display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
+  },
+  statusBanner: {
+    borderRadius: 16, border: '1.5px solid',
+    padding: '1rem',
+    marginBottom: '1.25rem',
+    display: 'flex', flexDirection: 'column', gap: 10,
+  },
+  blockedNote: {
+    background: '#fff',
+    border: '1px solid var(--border)',
+    borderRadius: 20,
+    padding: '2rem 1.5rem',
+    textAlign: 'center',
+  },
+  searchWrap: {
+    display: 'flex',
+    gap: 8,
+    marginBottom: '1.25rem',
+    alignItems: 'center',
+    width: '100%',
+    boxSizing: 'border-box',
+  },
+  searchBox: {
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    background: '#fff',
+    border: '2px solid var(--border)',
+    borderRadius: 50,
+    padding: '10px 14px',
+    boxShadow: 'var(--shadow-sm)',
+    minWidth: 0,
+    boxSizing: 'border-box',
+  },
+  buddyGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
+    gap: '1rem',
+  },
+  buddyCard: {
+    padding: 0,
+    overflow: 'hidden',
+    border: '1px solid var(--border)',
+    borderRadius: 16,
+  },
+  cardTop: {
+    height: 84,
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'flex-end',
+    padding: '0 1.25rem 0',
+  },
+  avatar: {
+    width: 54, height: 54,
+    borderRadius: '50%',
+    background: 'rgba(255,255,255,0.25)',
+    backdropFilter: 'blur(8px)',
+    border: '3px solid rgba(255,255,255,0.5)',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    color: '#fff', fontWeight: 800, fontSize: 18,
+    transform: 'translateY(27px)',
+    boxShadow: '0 4px 14px rgba(0,0,0,0.2)',
+    flexShrink: 0,
+  },
+  statusDot: {
+    width: 13, height: 13,
+    borderRadius: '50%',
+    border: '2px solid #fff',
+    position: 'absolute',
+    bottom: -6, left: 62,
+    boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+  },
+  cardBody: {
+    padding: '1.75rem 1.25rem 1.25rem',
+  },
+  busyBtn: {
+    width: '100%', padding: '11px',
+    background: 'var(--cream-dark)',
+    borderRadius: 50, textAlign: 'center',
+    fontSize: 13, fontWeight: 600,
+    color: 'var(--text-muted)',
+    boxSizing: 'border-box',
+  },
+  emptyState: {
+    textAlign: 'center',
+    padding: '3rem 1.5rem',
+    background: '#fff',
+    borderRadius: 20,
+    border: '1px solid var(--border)',
+  },
+  unmatchBtn: {
+    background: 'var(--coral-light)',
+    border: '1.5px solid var(--coral)',
+    borderRadius: 50,
+    padding: '10px 18px',
+    fontSize: 13, fontWeight: 700,
+    color: 'var(--coral-dark)',
+    cursor: 'pointer',
+    fontFamily: "'Plus Jakarta Sans',sans-serif",
+    minHeight: 44,
+    boxSizing: 'border-box',
+  },
 };
