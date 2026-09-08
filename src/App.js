@@ -200,8 +200,7 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <ScrollToTop />
-          <AppRoutes />
+        <AppRoutes />
       </BrowserRouter>
     </AuthProvider>
   );
