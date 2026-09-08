@@ -201,7 +201,7 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <ScrollToTop />
-        <AppRoutes />
+          <AppRoutes />
       </BrowserRouter>
     </AuthProvider>
   );
