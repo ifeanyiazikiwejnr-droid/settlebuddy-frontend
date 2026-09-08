@@ -201,30 +201,45 @@ export default function BuddyProfilePage() {
 
       {students.length > 0 && (
         <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
-          {students.map((student, index) => (
+                    {students.map((student, index) => (
             <div key={student.id} style={{
-              display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 10,
+              padding: '14px 16px',
               borderTop: index === 0 ? 'none' : '1px solid var(--border)',
             }}>
-              <div style={{
-                width: 44, height: 44, borderRadius: '50%',
-                background: 'var(--teal-light)', color: 'var(--teal)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontWeight: 600, fontSize: 15, flexShrink: 0
-              }}>
-                {student.name.charAt(0).toUpperCase()}
+              {/* Top row — avatar + info + badge */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <div style={{
+                  width: 42, height: 42, borderRadius: '50%',
+                  background: 'var(--teal-light)', color: 'var(--teal)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontWeight: 600, fontSize: 15, flexShrink: 0,
+                }}>
+                  {student.name.charAt(0).toUpperCase()}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontWeight: 600, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {student.name}
+                  </div>
+                  <div style={{ fontSize: 12, color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {student.email}
+                  </div>
+                  <div style={{ fontSize: 11, color: 'var(--text-faint)', marginTop: 2 }}>
+                    Matched {new Date(student.request_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  </div>
+                </div>
+                <span className="badge badge-teal" style={{ flexShrink: 0 }}>Active</span>
               </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 500, fontSize: 14 }}>{student.name}</div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{student.email}</div>
-              </div>
-              <span className="badge badge-teal">Active</span>
-              <div style={{ fontSize: 11, color: 'var(--text-faint)', textAlign: 'right', flexShrink: 0 }}>
-                Matched<br />
-                {new Date(student.request_date).toLocaleDateString('en-GB', {
-                  day: 'numeric', month: 'short', year: 'numeric'
-                })}
-              </div>
+
+              {/* Bottom row — chat button full width */}
+              <button
+                className="btn-primary"
+                style={{ width: '100%', padding: '10px', fontSize: 13 }}
+                onClick={() => window.location.href = '/chat'}>
+                💬 Chat with {student.name.split(' ')[0]}
+              </button>
             </div>
           ))}
         </div>
