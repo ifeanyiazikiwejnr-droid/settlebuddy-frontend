@@ -29,7 +29,11 @@ export default function ChatPage() {
   }, []);
 
   useEffect(() => { loadConversations(); }, []);
-  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages]);
+   useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [messages, loading]);
 
   const loadConversations = async () => {
     try {
