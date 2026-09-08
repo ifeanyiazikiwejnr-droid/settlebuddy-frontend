@@ -283,6 +283,7 @@ export default function ChatPage() {
                   </div>
 
                   {/* Input bar — always pinned at bottom */}
+                                    {/* Input bar — always pinned at bottom */}
                   <div style={styles.inputArea}>
                     <input
                       ref={inputRef}
@@ -293,11 +294,25 @@ export default function ChatPage() {
                       style={styles.msgInput}
                     />
                     <button
-                      className="btn-primary"
-                      style={{ padding: '10px 16px', borderRadius: 50, fontSize: 13, minWidth: 60, flexShrink: 0, minHeight: 44 }}
                       onClick={sendMessage}
-                      disabled={!input.trim()}>
-                      Send
+                      disabled={!input.trim()}
+                      style={{
+                        width: 44,
+                        height: 44,
+                        minWidth: 44,
+                        borderRadius: '50%',
+                        border: 'none',
+                        background: input.trim() ? 'var(--green)' : 'var(--border)',
+                        color: '#fff',
+                        fontSize: 18,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0,
+                        cursor: input.trim() ? 'pointer' : 'not-allowed',
+                        transition: 'background .2s',
+                      }}>
+                      ➤
                     </button>
                   </div>
 
@@ -347,7 +362,7 @@ const styles = {
   msgAvatar: { width: 28, height: 28, borderRadius: '50%', background: 'linear-gradient(135deg,var(--green),var(--green-mid))', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 10, flexShrink: 0 },
   senderLabel: { fontSize: 11, color: 'var(--text-muted)', marginBottom: 3, fontWeight: 600, paddingLeft: 4 },
   bubble: { padding: '10px 14px', fontSize: 14, lineHeight: 1.5, boxShadow: '0 1px 4px rgba(0,0,0,0.06)', wordBreak: 'break-word' },
-  inputArea: { display: 'flex', gap: 8, padding: '0.75rem', borderTop: '1px solid var(--border)', background: '#fff', alignItems: 'center', flexShrink: 0, boxSizing: 'border-box' },
+    inputArea: { display: 'flex', gap: 8, padding: '0.75rem', borderTop: '1px solid var(--border)', background: '#fff', alignItems: 'center', flexShrink: 0, boxSizing: 'border-box', width: '100%' },
   msgInput: { flex: 1, padding: '11px 14px', border: '2px solid var(--border)', borderRadius: 50, fontSize: 16, outline: 'none', fontFamily: "'Plus Jakarta Sans',sans-serif", minWidth: 0, boxSizing: 'border-box' },
   safetyBar: { textAlign: 'center', padding: '5px', fontSize: 10, color: 'var(--text-faint)', background: '#fff', borderTop: '1px solid var(--border)', flexShrink: 0 },
 };
