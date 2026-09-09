@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const roles = ['student', 'buddy', 'admin'];
 
@@ -9,7 +10,17 @@ export default function LoginPage() {
   const [searchParams] = useSearchParams();
   const [mode, setMode] = useState(searchParams.get('mode') === 'register' ? 'register' : 'login');
   const [role, setRole] = useState('student');
+  const refCode = new URLSearchParams(window.location.search).get('ref') || '';
   const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [referralInfo, setReferralInfo] = useState(null);
+
+  useEffect(() => {
+    if (refCode) {
+      axios.get(`/api/partners/validate/${refCode}`)
+        .then(res => setReferralInfo(res.data))
+        .catch(() => {});
+    }
+  }, [refCode]);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -25,7 +36,7 @@ export default function LoginPage() {
       const url = mode === 'login' ? '/api/auth/login' : '/api/auth/register';
       const body = mode === 'login'
         ? { email: form.email, password: form.password }
-        : { name: form.name, email: form.email, password: form.password, role };
+        : { name: form.name, email: form.email, password: form.password, role, referred_by: refCode || undefined };
       const res = await axios.post(url, body);
       login(res.data.token, res.data.user);
       navigate('/');
@@ -89,6 +100,11 @@ export default function LoginPage() {
             ))}
           </div>
 
+          {referralInfo && mode === 'register' && (
+          <div style={{ ...styles.infoBanner, background: 'linear-gradient(135deg,#e6f5f0,#d1f5ea)', borderLeft: '4px solid var(--green)', marginBottom: 16 }}>
+              🎓 You've been referred by <strong>{referralInfo.institution}</strong>. Your account will be linked to their partner programme.
+          </div>
+          )}
           {role === 'buddy' && mode === 'register' && (
           <div style={styles.infoBanner}>
             ℹ️ After registering, your account will be reviewed by an admin before you appear in student searches. You can still log in while waiting.

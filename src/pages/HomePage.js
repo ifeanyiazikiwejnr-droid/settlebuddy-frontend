@@ -27,6 +27,7 @@ const adminLinks = [
   { path: '/accommodations', icon: '🏡', label: 'Accommodations', desc: 'Manage property listings', color: '#0a5c44', bg: 'linear-gradient(135deg,#0a5c44,#0f7a5a)', img: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=70' },
   { path: '/users', icon: '👥', label: 'All Users', desc: 'View registered users', color: '#1a56db', bg: 'linear-gradient(135deg,#1a56db,#3b82f6)', img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=70' },
   { path: '/analytics', icon: '📊', label: 'Analytics', desc: 'Platform engagement and usage metrics', color: '#185fa5', bg: 'linear-gradient(135deg,#185fa5,#3b82f6)', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=70' },
+  { path: '/partners', icon: '🤝', label: 'Partners', desc: 'Manage referral partners and track attribution', color: '#059669', bg: 'linear-gradient(135deg,#059669,#10b981)', img: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=400&q=70' },
   { path: '/pending-buddies', icon: '⏳', label: 'Pending Buddies', desc: 'Review buddy applications', color: '#92600a', bg: 'linear-gradient(135deg,#f5a623,#ba7517)', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=70' },
   { path: '/register-buddy', icon: '🤝', label: 'Register Buddy', desc: 'Invite new buddies', color: '#ff5c3a', bg: 'linear-gradient(135deg,#ff5c3a,#f5a623)', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=70' },
 ];

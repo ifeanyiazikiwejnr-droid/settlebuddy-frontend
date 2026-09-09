@@ -26,6 +26,7 @@ import AIAssistantPage from './pages/AIAssistantPage';
 import WellbeingPage from './pages/WellbeingPage';
 import CompliancePage from './pages/CompliancePage';
 import AnalyticsPage from './pages/AnalyticsPage';
+import PartnersPage from './pages/PartnersPage';
 import GraduateVisaPage from './pages/GraduateVisaPage';
 import DocumentAssistantPage from './pages/DocumentAssistantPage';
 import UpgradePage from './pages/UpgradePage';
@@ -148,6 +149,11 @@ function ScrollToTop() {
         <Route path="graduate-visa" element={
           <RoleRoute roles={['student']}>
             <GraduateVisaPage />
+          </RoleRoute>
+        } />
+        <Route path="partners" element={
+          <RoleRoute roles={['admin']}>
+            <PartnersPage />
           </RoleRoute>
         } />
         <Route path="analytics" element={
