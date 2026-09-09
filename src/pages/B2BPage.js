@@ -19,25 +19,46 @@ const stats = [
 
 const tiers = [
   {
-    name: 'Starter',
-    price: '£299',
-    period: '/month',
+    name: 'Pilot',
+    price: 'Free',
+    period: '/ 6 months',
     color: 'var(--green)',
     bg: 'var(--green-light)',
-    desc: 'Perfect for student unions and small accommodation providers',
-    features: ['Up to 500 student users', 'Basic analytics dashboard', 'Accommodation listings (up to 10)', 'Email support', 'Settle-In Buddy branding'],
-    cta: 'Get Started',
+    desc: 'For the first 3 qualifying universities. Remove all risk — get full access and provide a case study at the end.',
+    badge: '🎓 Limited — 3 spots',
+    features: [
+      'Full platform access for 6 months',
+      'Up to 1,000 student users',
+      'Analytics dashboard',
+      'Buddy matching and real-time chat',
+      'AI assistant and document scanner',
+      'Dedicated onboarding support',
+      'Case study at end of pilot',
+    ],
+    cta: 'Apply for Pilot',
+    note: 'In exchange for a named testimonial and case study.',
   },
   {
     name: 'University',
-    price: '£999',
-    period: '/month',
+    price: '£2',
+    period: '/ student / year',
     color: '#185fa5',
     bg: '#e6f1fb',
-    desc: 'Built for universities and large student housing providers',
-    features: ['Unlimited student users', 'White-label branding', 'Advanced analytics & reporting', 'API integration with student portal', 'Dedicated account manager', 'Priority buddy matching', 'Custom arrival checklist'],
+    desc: 'Scales naturally with your institution. A university with 500 international students pays £1,000/year. One with 5,000 pays £10,000.',
+    badge: '⭐ Most Popular',
+    features: [
+      'Unlimited student users',
+      'Priced per enrolled international student',
+      'White-label branding option',
+      'Advanced analytics & reporting',
+      'Buddy matching and real-time chat',
+      'Custom arrival checklist',
+      'Dedicated account manager',
+      'API integration with student portal',
+    ],
     cta: 'Book a Demo',
     featured: true,
+    note: 'Min. 250 students. Billed annually.',
   },
   {
     name: 'Enterprise',
@@ -45,9 +66,20 @@ const tiers = [
     period: '',
     color: '#7c3aed',
     bg: '#f3f0ff',
-    desc: 'For large networks, agents and national partnerships',
-    features: ['Multi-institution management', 'Custom AI assistant training', 'Full white-label solution', 'Dedicated development support', 'SLA guarantee', 'On-site onboarding', 'Revenue share model'],
+    desc: 'For large university networks, national agents and multi-institution groups. Includes outcomes-based Graduate visa pathway add-on.',
+    badge: '🏢 Multi-institution',
+    features: [
+      'Multi-institution management',
+      'Full white-label solution',
+      'Custom AI assistant training',
+      'Graduate visa pathway tracker add-on',
+      'Dedicated development support',
+      'SLA guarantee',
+      'On-site onboarding',
+      'Revenue share model available',
+    ],
     cta: 'Contact Us',
+    note: 'Minimum 3 institutions or 5,000 students.',
   },
 ];
 
@@ -223,8 +255,8 @@ export default function B2BPage() {
         <div style={styles.inner}>
           <div style={styles.sectionHeader}>
             <div style={styles.sectionBadge}>Pricing</div>
-            <h2 style={styles.sectionTitle}>Transparent pricing for every institution</h2>
-            <p style={styles.sectionSub}>All plans include a 30-day pilot. No setup fees.</p>
+            <h2 style={styles.sectionTitle}>Pricing that scales with your institution</h2>
+            <p style={styles.sectionSub}>Start free with our pilot programme, then move to per-student pricing that grows with you. No fixed monthly fees — you pay for what you use.</p>
           </div>
           <div style={styles.pricingGrid}>
             {tiers.map(t => (
@@ -234,36 +266,64 @@ export default function B2BPage() {
                 transform: t.featured ? 'scale(1.02)' : 'scale(1)',
                 boxShadow: t.featured ? `0 8px 30px ${t.color}25` : 'var(--shadow-sm)',
               }}>
-                {t.featured && (
-                  <div style={{ ...styles.featuredBadge, background: t.color }}>Most Popular</div>
-                )}
+            {t.badge && (
+                <div style={{ ...styles.featuredBadge, background: t.color }}>{t.badge}</div>
+              )}
                 <div style={{ ...styles.pricingTop, background: t.bg }}>
-                  <div style={{ fontWeight: 700, fontSize: 18, color: t.color, marginBottom: 4 }}>{t.name}</div>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
+                    <div style={{ fontWeight: 700, fontSize: 18, color: t.color, marginBottom: 4 }}>{t.name}</div>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, flexWrap: 'wrap' }}>
                     <span style={{ fontFamily: "'Playfair Display',serif", fontSize: '2.2rem', fontWeight: 900, color: t.color }}>{t.price}</span>
                     <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>{t.period}</span>
-                  </div>
-                  <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 6 }}>{t.desc}</div>
+                    </div>
+                    <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 6, lineHeight: 1.6 }}>{t.desc}</div>
                 </div>
                 <div style={styles.pricingBody}>
-                  <ul style={styles.featuresList}>
+                    <ul style={styles.featuresList}>
                     {t.features.map(f => (
-                      <li key={f} style={styles.feature}>
+                        <li key={f} style={styles.feature}>
                         <span style={{ color: t.color, flexShrink: 0, fontWeight: 700 }}>✓</span>
                         <span style={{ fontSize: 13 }}>{f}</span>
-                      </li>
+                        </li>
                     ))}
-                  </ul>
-                  <button
+                    </ul>
+                    {t.note && (
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)', background: 'var(--cream)', borderRadius: 8, padding: '6px 10px', marginBottom: 12, lineHeight: 1.5 }}>
+                        ℹ️ {t.note}
+                    </div>
+                    )}
+                    <button
                     style={{ ...styles.pricingBtn, background: t.color }}
-                    onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>
+                    onClick={() => document.getElementById(t.name === 'Pilot' ? 'contact' : 'demo').scrollIntoView({ behavior: 'smooth' })}>
                     {t.cta} →
-                  </button>
+                    </button>
                 </div>
               </div>
             ))}
           </div>
         </div>
+        {/* Pricing comparison note */}
+          <div style={{ maxWidth: 700, margin: '2rem auto 0', background: 'var(--green-light)', border: '1.5px solid #9FE1CB', borderRadius: 16, padding: '1.25rem 1.5rem' }}>
+            <div style={{ fontWeight: 700, fontSize: 14, color: 'var(--green)', marginBottom: 8 }}>
+              📊 How per-student pricing compares
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,180px),1fr))', gap: '1rem' }}>
+              {[
+                { students: '250', annual: '£500', monthly: '£41.67/mo' },
+                { students: '500', annual: '£1,000', monthly: '£83/mo' },
+                { students: '1,000', annual: '£2,000', monthly: '£167/mo' },
+                { students: '5,000', annual: '£10,000', monthly: '£833/mo' },
+              ].map(r => (
+                <div key={r.students} style={{ textAlign: 'center', background: '#fff', borderRadius: 10, padding: '10px' }}>
+                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.3rem', fontWeight: 900, color: 'var(--green)' }}>{r.annual}</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text)', marginBottom: 2 }}>{r.students} students</div>
+                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>({r.monthly})</div>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, lineHeight: 1.6 }}>
+              Based on £2 per enrolled international student per year. Billed annually. Minimum 250 students.
+            </p>
+          </div>
       </section>
 
       {/* FAQ */}
