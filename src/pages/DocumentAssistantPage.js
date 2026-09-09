@@ -258,22 +258,41 @@ export default function DocumentAssistantPage() {
               </div>
 
               {/* Follow up */}
-              <div style={styles.followUp}>
+                            <div style={styles.followUp}>
                 <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 8, color: 'var(--text-muted)' }}>
                   Ask a follow-up question:
                 </div>
-                <div style={{ display: 'flex', gap: 8 }}>
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center', width: '100%', boxSizing: 'border-box' }}>
                   <input
                     value={question}
                     onChange={e => setQuestion(e.target.value)}
                     placeholder="Ask another question..."
-                    style={{ ...styles.questionInput, margin: 0, flex: 1 }}
+                    style={{
+                      flex: 1,
+                      minWidth: 0,
+                      padding: '11px 14px',
+                      border: '2px solid var(--border)',
+                      borderRadius: 12,
+                      fontSize: 14,
+                      outline: 'none',
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                      boxSizing: 'border-box',
+                    }}
                     onKeyDown={e => e.key === 'Enter' && analyse()}
                   />
-                  <button className="btn-primary"
-                    style={{ padding: '10px 16px', fontSize: 13, flexShrink: 0 }}
-                    onClick={() => analyse()} disabled={loading || !question.trim()}>
-                    Ask →
+                  <button
+                    onClick={() => analyse()}
+                    disabled={loading || !question.trim()}
+                    style={{
+                      width: 44, height: 44, minWidth: 44,
+                      borderRadius: '50%', border: 'none',
+                      background: question.trim() && !loading ? 'var(--green)' : 'var(--border)',
+                      color: '#fff', fontSize: 18,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      flexShrink: 0,
+                      cursor: question.trim() && !loading ? 'pointer' : 'not-allowed',
+                    }}>
+                    ➤
                   </button>
                 </div>
               </div>

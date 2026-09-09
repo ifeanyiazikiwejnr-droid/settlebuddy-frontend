@@ -113,9 +113,10 @@ export default function B2BPage() {
             Settle-In Buddy is the UK's dedicated settlement platform for international students. Partner with us to reduce drop-out rates, boost student satisfaction and free up your support team.
           </p>
           <div style={styles.heroBtns}>
-            <button className="btn-primary" style={{ padding: '15px 36px', fontSize: 15 }}
+            <button className="btn-primary"
+              style={{ padding: '9px 14px', fontSize: 12, whiteSpace: 'nowrap', flexShrink: 0 }}
               onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>
-              Book a Demo →
+              Book a Demo
             </button>
             <button style={styles.ghostBtn}
               onClick={() => navigate('/landing')}>
@@ -359,12 +360,12 @@ export default function B2BPage() {
 const styles = {
   page: { background: '#fff', minHeight: '100vh', fontFamily: "'Plus Jakarta Sans',sans-serif" },
   nav: { position: 'sticky', top: 0, background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border)', zIndex: 100, padding: '0 1.5rem' },
-  navInner: { maxWidth: 1100, margin: '0 auto', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 },
+    navInner: { maxWidth: 1100, margin: '0 auto', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, overflow: 'hidden' },
   navLogo: { display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' },
   logoMark: { width: 34, height: 34, borderRadius: 10, background: 'linear-gradient(135deg,var(--green),var(--green-mid))', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Playfair Display',serif", fontWeight: 900, fontSize: 18 },
   logoText: { fontFamily: "'Playfair Display',serif", fontSize: '1.05rem', fontWeight: 700, color: 'var(--green)' },
-  navLinks: { display: 'flex', alignItems: 'center', gap: 24 },
-  navLink: { fontSize: 14, fontWeight: 600, color: 'var(--text-muted)', textDecoration: 'none', transition: 'color .2s' },
+  navLinks: { display: 'flex', alignItems: 'center', gap: 8 },
+  navLink: { fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', textDecoration: 'none', display: 'none' },
   hero: { position: 'relative', minHeight: '90vh', display: 'flex', alignItems: 'flex-end', overflow: 'hidden' },
   heroBg: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' },
   heroOverlay: { position: 'absolute', inset: 0, background: 'linear-gradient(160deg, rgba(6,40,30,0.92) 0%, rgba(10,92,68,0.80) 50%, rgba(255,92,58,0.3) 100%)' },
