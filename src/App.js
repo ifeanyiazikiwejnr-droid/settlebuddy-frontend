@@ -151,7 +151,7 @@ function ScrollToTop() {
             <GraduateVisaPage />
           </RoleRoute>
         } />
-        <Route path="partners" element={
+        <Route path="partner-management" element={
           <RoleRoute roles={['admin']}>
             <PartnersPage />
           </RoleRoute>

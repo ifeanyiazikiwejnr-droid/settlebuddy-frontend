@@ -128,8 +128,8 @@ export default function B2BPage() {
 
       {/* Hero */}
       <section style={styles.hero}>
-        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1400&q=80"
-          alt="University students" style={styles.heroBg} />
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1400&q=80"
+          alt="" role="presentation" style={styles.heroBg} />
         <div style={styles.heroOverlay} />
         <div style={styles.heroContent}>
           <div style={styles.heroBadge}>🇬🇧 Trusted by UK international students</div>
