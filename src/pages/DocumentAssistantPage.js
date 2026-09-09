@@ -91,24 +91,63 @@ export default function DocumentAssistantPage() {
     setError('');
   };
 
-  const formatAnalysis = (text) => {
-    return text.split('\n').map((line, i) => {
-      if (line.startsWith('## ') || line.startsWith('# ')) {
-        return <h3 key={i} style={styles.analysisH3}>{line.replace(/^#+\s/, '')}</h3>;
-      }
-      if (line.startsWith('**') && line.endsWith('**')) {
-        return <p key={i} style={{ fontWeight: 700, marginBottom: 6, color: 'var(--text)' }}>{line.replace(/\*\*/g, '')}</p>;
-      }
-      if (line.startsWith('- ') || line.startsWith('• ')) {
+    const formatAnalysis = (text) => {
+    // Strip markdown tables, separators and raw symbols
+    const cleaned = text
+      .replace(/\|.*\|/g, '')           // remove table rows
+      .replace(/^---+$/gm, '')          // remove --- separators
+      .replace(/^#{1,3} /gm, '')        // remove ### headings
+      .split('\n')
+      .filter(line => line.trim() !== '|' && !line.match(/^[-|]+$/)) // remove table borders
+      .join('\n');
+
+    return cleaned.split('\n').map((line, i) => {
+      const trimmed = line.trim();
+      if (!trimmed) return <div key={i} style={{ height: 6 }} />;
+
+      // Section headers — emoji-led lines
+      if (/^[📄✅⚠️🚨💡]/.test(trimmed)) {
         return (
-          <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 6 }}>
-            <span style={{ color: 'var(--green)', flexShrink: 0, fontWeight: 700 }}>•</span>
-            <span style={{ fontSize: 14, lineHeight: 1.6 }}>{line.replace(/^[-•] /, '')}</span>
+          <div key={i} style={{
+            display: 'flex', alignItems: 'center', gap: 8,
+            fontWeight: 700, fontSize: 15,
+            color: 'var(--green)',
+            marginTop: i === 0 ? 0 : 16, marginBottom: 8,
+            paddingBottom: 6,
+            borderBottom: '1px solid var(--border)',
+          }}>
+            {trimmed}
           </div>
         );
       }
-      if (line.trim() === '') return <div key={i} style={{ height: 8 }} />;
-      return <p key={i} style={{ fontSize: 14, lineHeight: 1.7, marginBottom: 4, color: 'var(--text)' }}>{line}</p>;
+
+      // Bullet points
+      if (trimmed.startsWith('- ') || trimmed.startsWith('• ') || trimmed.startsWith('* ')) {
+        const content = trimmed.replace(/^[-•*] /, '').replace(/\*\*/g, '');
+        return (
+          <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 6, paddingLeft: 4 }}>
+            <span style={{ color: 'var(--green)', flexShrink: 0, fontWeight: 700, marginTop: 1 }}>•</span>
+            <span style={{ fontSize: 13, lineHeight: 1.6, color: 'var(--text)' }}>{content}</span>
+          </div>
+        );
+      }
+
+      // Bold lines
+      if (trimmed.startsWith('**') && trimmed.endsWith('**')) {
+        return (
+          <p key={i} style={{ fontWeight: 700, fontSize: 13, marginBottom: 4, color: 'var(--text)' }}>
+            {trimmed.replace(/\*\*/g, '')}
+          </p>
+        );
+      }
+
+      // Strip inline bold markers from regular lines
+      const clean = trimmed.replace(/\*\*/g, '');
+      return (
+        <p key={i} style={{ fontSize: 13, lineHeight: 1.7, marginBottom: 4, color: 'var(--text)' }}>
+          {clean}
+        </p>
+      );
     });
   };
 
@@ -258,7 +297,7 @@ export default function DocumentAssistantPage() {
               </div>
 
               {/* Follow up */}
-                            <div style={styles.followUp}>
+              <div style={styles.followUp}>
                 <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 8, color: 'var(--text-muted)' }}>
                   Ask a follow-up question:
                 </div>
