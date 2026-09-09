@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Footer from './Footer';
+import DemoBanner from './DemoBanner';
 
 const studentNav = [
   { path: '/', label: 'Home', icon: '🏠' },
@@ -50,7 +51,7 @@ export default function AppLayout() {
 
   return (
     <div style={styles.shell}>
-
+      <DemoBanner />
       {/* Topbar */}
       <div style={styles.topbar}>
         <div style={styles.topLeft}>
@@ -74,6 +75,7 @@ export default function AppLayout() {
           </button>
         </div>
       </div>
+      
 
       {/* Overlay */}
       <div className={`sidebar-overlay ${sidebarOpen ? 'open' : ''}`} onClick={() => setSidebarOpen(false)} />

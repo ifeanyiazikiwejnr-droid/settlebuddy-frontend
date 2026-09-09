@@ -61,14 +61,40 @@ const faqs = [
 ];
 
 const emptyForm = { name: '', organisation: '', role: '', email: '', phone: '', message: '', type: 'University' };
+const emptyDemoForm = { name: '', institution: '', role: '', email: '' };
 
 export default function B2BPage() {
   const navigate = useNavigate();
   const [form, setForm] = useState(emptyForm);
   const [sent, setSent] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
-
+  const [demoForm, setDemoForm] = useState(emptyDemoForm);
+  const [demoSent, setDemoSent] = useState(false);
+  const [demoCredentials, setDemoCredentials] = useState(null);
+  const [demoLoading, setDemoLoading] = useState(false);
+  const [demoError, setDemoError] = useState('');
   const handle = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
+  const handleDemo = e => setDemoForm(f => ({ ...f, [e.target.name]: e.target.value }));
+
+  const submitDemo = async (e) => {
+    e.preventDefault();
+    if (!demoForm.name || !demoForm.email || !demoForm.institution) return;
+    setDemoLoading(true);
+    setDemoError('');
+    try {
+      const res = await fetch('https://settlebuddy-backend.onrender.com/api/demo/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(demoForm),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Something went wrong');
+      setDemoCredentials(data.credentials);
+      setDemoSent(true);
+    } catch (err) {
+      setDemoError(err.message);
+    } finally { setDemoLoading(false); }
+  };
 
   const submit = (e) => {
     e.preventDefault();
@@ -90,6 +116,7 @@ export default function B2BPage() {
           <div style={styles.navLinks}>
             <a href="#partners" style={styles.navLink}>Partners</a>
             <a href="#pricing" style={styles.navLink}>Pricing</a>
+            <a href="#demo" style={styles.navLink}>Demo</a>
             <a href="#faq" style={styles.navLink}>FAQ</a>
             <button className="btn-primary" style={{ padding: '10px 22px', fontSize: 13 }}
               onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>
@@ -112,15 +139,14 @@ export default function B2BPage() {
           <p style={styles.heroSub}>
             Settle-In Buddy is the UK's dedicated settlement platform for international students. Partner with us to reduce drop-out rates, boost student satisfaction and free up your support team.
           </p>
-          <div style={styles.heroBtns}>
-            <button className="btn-primary"
-              style={{ padding: '9px 14px', fontSize: 12, whiteSpace: 'nowrap', flexShrink: 0 }}
-              onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>
-              Book a Demo
+            <div style={styles.heroBtns}>
+            <button className="btn-primary" style={{ padding: '15px 36px', fontSize: 15 }}
+              onClick={() => document.getElementById('demo').scrollIntoView({ behavior: 'smooth' })}>
+              🚀 Get Instant Demo →
             </button>
             <button style={styles.ghostBtn}
-              onClick={() => navigate('/landing')}>
-              View Student Platform
+              onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>
+              Book a Call
             </button>
           </div>
         </div>
@@ -263,6 +289,152 @@ export default function B2BPage() {
         </div>
       </section>
 
+            {/* Demo Section */}
+      <section id="demo" style={{ ...styles.section, background: '#fff' }}>
+        <div style={styles.inner}>
+          <div style={styles.sectionHeader}>
+            <div style={styles.sectionBadge}>🎓 Try Before You Buy</div>
+            <h2 style={styles.sectionTitle}>Get instant demo access</h2>
+            <p style={styles.sectionSub}>
+              Request a free 14-day demo account and explore the full platform — pre-loaded with student data, buddy matches and live AI — right now, no sales call needed.
+            </p>
+          </div>
+
+          <div style={{ maxWidth: 560, margin: '0 auto' }}>
+            {demoSent && demoCredentials ? (
+              <div style={{ background: '#fff', border: '2px solid var(--green)', borderRadius: 24, padding: '2rem', textAlign: 'center' }}>
+                <div style={{ fontSize: '3rem', marginBottom: 12 }}>🎉</div>
+                <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.4rem', marginBottom: 8, color: 'var(--green)' }}>
+                  Your demo is ready!
+                </h3>
+                <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: '1.5rem', lineHeight: 1.7 }}>
+                  Use these credentials to log into the platform. Your demo includes 15 pre-loaded students, 5 verified buddies, live buddy matches and the full admin dashboard.
+                </p>
+
+                {/* Credentials box */}
+                <div style={{ background: 'var(--green-light)', border: '1.5px solid #9FE1CB', borderRadius: 16, padding: '1.25rem', marginBottom: '1.5rem', textAlign: 'left' }}>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--green)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 12 }}>
+                    Login Credentials
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 4 }}>
+                      <span style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 600 }}>Email</span>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', fontFamily: 'monospace' }}>{demoCredentials.email}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 4 }}>
+                      <span style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 600 }}>Password</span>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', fontFamily: 'monospace' }}>{demoCredentials.password}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 4 }}>
+                      <span style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 600 }}>Expires</span>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--coral-dark)' }}>
+                        {new Date(demoCredentials.expires).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                
+                <a
+                  href="https://settleinbuddy.netlify.app/login"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    display: 'block', width: '100%', padding: '14px',
+                    background: 'var(--green)', color: '#fff',
+                    borderRadius: 50, textDecoration: 'none',
+                    fontSize: 15, fontWeight: 700, textAlign: 'center',
+                    marginBottom: 12, boxSizing: 'border-box',
+                    fontFamily: "'Plus Jakarta Sans',sans-serif",
+                  }}>
+                  Open Platform →
+                </a>
+                <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+                  Save your credentials — they won't be shown again. Questions? Email <strong>partners@settlebuddy.uk</strong>
+                </p>
+              </div>
+            ) : (
+              <div style={{ background: '#fff', border: '1.5px solid var(--border)', borderRadius: 24, overflow: 'hidden', boxShadow: '0 8px 30px rgba(0,0,0,0.08)' }}>
+                {/* Header */}
+                <div style={{ background: 'linear-gradient(135deg,var(--green),var(--green-mid))', padding: '1.5rem', textAlign: 'center' }}>
+                  <div style={{ fontSize: '2rem', marginBottom: 8 }}>🚀</div>
+                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.3rem', color: '#fff', fontWeight: 700, marginBottom: 4 }}>
+                    14-Day Free Demo
+                  </div>
+                  <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.85)' }}>
+                    Full platform access · Pre-loaded data · No credit card
+                  </div>
+                </div>
+
+                {/* What's included */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, borderBottom: '1px solid var(--border)' }}>
+                  {[
+                    ['15', 'Pre-loaded students'],
+                    ['5', 'Verified buddies'],
+                    ['5', 'Active buddy matches'],
+                    ['Full', 'Admin dashboard'],
+                    ['Live', 'AI assistant'],
+                    ['Real', 'Chat messages'],
+                  ].map(([num, label], i) => (
+                    <div key={i} style={{
+                      padding: '12px 16px',
+                      borderRight: i % 2 === 0 ? '1px solid var(--border)' : 'none',
+                      borderBottom: i < 4 ? '1px solid var(--border)' : 'none',
+                      textAlign: 'center',
+                    }}>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: '1.4rem', fontWeight: 900, color: 'var(--green)' }}>{num}</div>
+                      <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>{label}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Form */}
+                <form style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: 12 }} onSubmit={submitDemo}>
+                  <div className="form-group" style={{ margin: 0 }}>
+                    <label>Your Name *</label>
+                    <input name="name" value={demoForm.name} onChange={handleDemo} placeholder="Dr. Sarah Johnson" required />
+                  </div>
+                  <div className="form-group" style={{ margin: 0 }}>
+                    <label>Institution *</label>
+                    <input name="institution" value={demoForm.institution} onChange={handleDemo} placeholder="University of Birmingham" required />
+                  </div>
+                  <div className="form-group" style={{ margin: 0 }}>
+                    <label>Your Role</label>
+                    <input name="role" value={demoForm.role} onChange={handleDemo} placeholder="International Student Officer" />
+                  </div>
+                  <div className="form-group" style={{ margin: 0 }}>
+                    <label>Work Email *</label>
+                    <input name="email" type="email" value={demoForm.email} onChange={handleDemo} placeholder="s.johnson@university.ac.uk" required />
+                  </div>
+                  {demoError && (
+                    <div style={{ background: '#fff1f0', border: '1px solid #ffc9c9', borderRadius: 10, padding: '10px 14px', fontSize: 13, color: '#c92a2a' }}>
+                      {demoError}
+                    </div>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={demoLoading}
+                    style={{
+                      width: '100%', padding: '14px',
+                      background: 'linear-gradient(135deg,var(--green),var(--green-mid))',
+                      color: '#fff', border: 'none', borderRadius: 50,
+                      fontSize: 15, fontWeight: 700, cursor: demoLoading ? 'not-allowed' : 'pointer',
+                      fontFamily: "'Plus Jakarta Sans',sans-serif",
+                      opacity: demoLoading ? 0.7 : 1,
+                    }}>
+                    {demoLoading ? 'Creating your demo...' : '🚀 Get Instant Demo Access →'}
+                  </button>
+                  <p style={{ fontSize: 11, color: 'var(--text-faint)', textAlign: 'center', lineHeight: 1.5 }}>
+                    Your demo account will be created instantly with full admin access and pre-loaded student data. No credit card required.
+                  </p>
+                </form>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+
       {/* Contact form */}
       <section id="contact" style={{ ...styles.section, background: 'linear-gradient(135deg,var(--green-dark),var(--green))' }}>
         <div style={styles.inner}>
@@ -360,7 +532,7 @@ export default function B2BPage() {
 const styles = {
   page: { background: '#fff', minHeight: '100vh', fontFamily: "'Plus Jakarta Sans',sans-serif" },
   nav: { position: 'sticky', top: 0, background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border)', zIndex: 100, padding: '0 1.5rem' },
-    navInner: { maxWidth: 1100, margin: '0 auto', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, overflow: 'hidden' },
+  navInner: { maxWidth: 1100, margin: '0 auto', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, overflow: 'hidden' },
   navLogo: { display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' },
   logoMark: { width: 34, height: 34, borderRadius: 10, background: 'linear-gradient(135deg,var(--green),var(--green-mid))', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Playfair Display',serif", fontWeight: 900, fontSize: 18 },
   logoText: { fontFamily: "'Playfair Display',serif", fontSize: '1.05rem', fontWeight: 700, color: 'var(--green)' },
