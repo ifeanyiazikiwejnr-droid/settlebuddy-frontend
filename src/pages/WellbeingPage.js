@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const sections = [
   {
@@ -151,6 +151,9 @@ const sections = [
 
 export default function WellbeingPage() {
   const [active, setActive] = useState('mental');
+    useEffect(() => {
+    axios.post('/api/analytics/log', { action: 'wellbeing_visited' }).catch(() => {});
+  }, []);
   const activeSection = sections.find(s => s.key === active);
 
   return (

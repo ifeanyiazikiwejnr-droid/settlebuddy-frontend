@@ -37,6 +37,7 @@ export default function AIAssistantPage() {
     setLoading(true);
 
     try {
+      axios.post('/api/analytics/log', { action: 'ai_chat' }).catch(() => {});
       const res = await axios.post('/api/ai/chat', {
         messages: newMessages.map(m => ({ role: m.role, content: m.content })),
       });

@@ -9,7 +9,7 @@ const studentLinks = [
   { path: '/ai-assistant', icon: '🤖', label: 'AI Assistant', desc: 'Ask anything about UK student life', color: '#185fa5', bg: 'linear-gradient(135deg,#185fa5,#3b82f6)', img: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&q=70' },
   { path: '/documents', icon: '📄', label: 'Document Help', desc: 'Upload and understand your documents', color: '#7c3aed', bg: 'linear-gradient(135deg,#7c3aed,#a855f7)', img: 'https://images.unsplash.com/photo-1568667256549-094345857637?w=400&q=70' },
   { path: '/compliance', icon: '📋', label: 'Compliance Planner', desc: 'Track work hours and Graduate visa progress', color: '#7c3aed', bg: 'linear-gradient(135deg,#7c3aed,#a855f7)', img: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=70' },
-    { path: '/graduate-visa', icon: '🎓', label: 'Graduate Visa', desc: 'Your guide to staying in the UK after your degree', color: '#0a5c44', bg: 'linear-gradient(135deg,#0a5c44,#0f7a5a)', img: 'https://images.unsplash.com/photo-1627556704302-624286467c65?w=400&q=70' },
+  { path: '/graduate-visa', icon: '🎓', label: 'Graduate Visa', desc: 'Your guide to staying in the UK after your degree', color: '#0a5c44', bg: 'linear-gradient(135deg,#0a5c44,#0f7a5a)', img: 'https://images.unsplash.com/photo-1627556704302-624286467c65?w=400&q=70' },
   { path: '/checklist', icon: '✅', label: 'Arrival Checklist', desc: 'Track your settlement tasks', color: '#0a5c44', bg: 'linear-gradient(135deg,#0a5c44,#0f7a5a)', img: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&q=70' },
   { path: '/accommodations', icon: '🏡', label: 'Accommodations', desc: 'Find your perfect home', color: '#0a5c44', bg: 'linear-gradient(135deg,#0a5c44,#0f7a5a)', img: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=70' },
   { path: '/transport', icon: '🚌', label: 'Transportation', desc: 'Get around the UK', color: '#1a56db', bg: 'linear-gradient(135deg,#1a56db,#3b82f6)', img: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&q=70' },
@@ -26,6 +26,7 @@ const buddyLinks = [
 const adminLinks = [
   { path: '/accommodations', icon: '🏡', label: 'Accommodations', desc: 'Manage property listings', color: '#0a5c44', bg: 'linear-gradient(135deg,#0a5c44,#0f7a5a)', img: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=70' },
   { path: '/users', icon: '👥', label: 'All Users', desc: 'View registered users', color: '#1a56db', bg: 'linear-gradient(135deg,#1a56db,#3b82f6)', img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=70' },
+  { path: '/analytics', icon: '📊', label: 'Analytics', desc: 'Platform engagement and usage metrics', color: '#185fa5', bg: 'linear-gradient(135deg,#185fa5,#3b82f6)', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=70' },
   { path: '/pending-buddies', icon: '⏳', label: 'Pending Buddies', desc: 'Review buddy applications', color: '#92600a', bg: 'linear-gradient(135deg,#f5a623,#ba7517)', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=70' },
   { path: '/register-buddy', icon: '🤝', label: 'Register Buddy', desc: 'Invite new buddies', color: '#ff5c3a', bg: 'linear-gradient(135deg,#ff5c3a,#f5a623)', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=70' },
 ];

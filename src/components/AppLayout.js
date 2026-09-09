@@ -28,6 +28,7 @@ const buddyNav = [
 ];
 const adminNav = [
   { path: '/', label: 'Dashboard', icon: '🏠' },
+  { path: '/analytics', label: 'Analytics', icon: '📊' },
   { path: '/accommodations', label: 'Accommodations', icon: '🏡' },
   { path: '/users', label: 'All Users', icon: '👥' },
   { path: '/premium-users', label: 'Premium Users', icon: '⭐' },
