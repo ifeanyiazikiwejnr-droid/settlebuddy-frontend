@@ -30,6 +30,7 @@ const adminNav = [
   { path: '/', label: 'Dashboard', icon: '🏠' },
   { path: '/analytics', label: 'Analytics', icon: '📊' },
   { path: '/partner-management', label: 'Partners', icon: '🤝' },
+  { path: '/cms', label: 'University CMS', icon: '🏫' },
   { path: '/accommodations', label: 'Accommodations', icon: '🏡' },
   { path: '/users', label: 'All Users', icon: '👥' },
   { path: '/premium-users', label: 'Premium Users', icon: '⭐' },
