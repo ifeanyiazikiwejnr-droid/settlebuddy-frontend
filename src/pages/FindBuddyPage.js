@@ -179,34 +179,52 @@ export default function FindBuddyPage() {
       ) : (
         <>
           {/* Search */}
-          <div style={styles.searchWrap}>
-            <div style={styles.searchBox}>
-              <span style={{ fontSize: 16, flexShrink: 0 }}>🔍</span>
-              <input
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && load(search)}
-                placeholder="Search by language..."
+            <div style={styles.searchWrap}>
+              <div style={styles.searchBox}>
+                <span style={{ fontSize: 16, flexShrink: 0, lineHeight: 1 }}>🔍</span>
+                <input
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && load(search)}
+                  placeholder="Search by language..."
+                  style={{
+                    flex: 1,
+                    border: 'none',
+                    outline: 'none',
+                    fontSize: 16,
+                    background: 'transparent',
+                    fontFamily: "'Plus Jakarta Sans',sans-serif",
+                    minWidth: 0,
+                    width: '100%',
+                  }}
+                />
+                {search && (
+                  <button
+                    onClick={() => { setSearch(''); load(''); }}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', fontSize: 16, flexShrink: 0, padding: 4, lineHeight: 1, minWidth: 28, minHeight: 28 }}>
+                    ✕
+                  </button>
+                )}
+              </div>
+              <button
+                onClick={() => load(search)}
                 style={{
-                  flex: 1, border: 'none', outline: 'none',
-                  fontSize: 14, background: 'transparent',
+                  flexShrink: 0,
+                  padding: '11px 18px',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  minHeight: 44,
+                  background: 'var(--green)',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: 50,
+                  cursor: 'pointer',
                   fontFamily: "'Plus Jakarta Sans',sans-serif",
-                  minWidth: 0,
-                }}
-              />
-              {search && (
-                <button onClick={() => { setSearch(''); load(''); }}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', fontSize: 16, flexShrink: 0, padding: 2 }}>
-                  ✕
-                </button>
-              )}
+                  whiteSpace: 'nowrap',
+                }}>
+                Search
+              </button>
             </div>
-            <button className="btn-secondary"
-              style={{ flexShrink: 0, padding: '10px 16px', fontSize: 13, minHeight: 44 }}
-              onClick={() => load(search)}>
-              Search
-            </button>
-          </div>
 
           {loading && (
             <p style={{ color: 'var(--text-muted)', fontSize: 14, padding: '1rem 0' }}>
@@ -258,7 +276,7 @@ export default function FindBuddyPage() {
                     {b.bio && (
                       <p style={{
                         fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6,
-                        marginBottom: 14,
+                        marginBottom: 14, flex: 1,
                         display: '-webkit-box', WebkitLineClamp: 3,
                         WebkitBoxOrient: 'vertical', overflow: 'hidden',
                       }}>
@@ -266,17 +284,19 @@ export default function FindBuddyPage() {
                       </p>
                     )}
 
-                    {/* CTA */}
-                    {b.available ? (
-                      <button className="btn-primary"
-                        style={{ width: '100%', padding: '11px', fontSize: 13, minHeight: 44 }}
-                        onClick={() => request(b.id, b.name)}
-                        disabled={requesting[b.id]}>
-                        {requesting[b.id] ? 'Sending...' : 'Request this buddy →'}
-                      </button>
-                    ) : (
-                      <div style={styles.busyBtn}>Currently Busy</div>
-                    )}
+                    {/* CTA — always at bottom */}
+                    <div style={{ marginTop: 'auto' }}>
+                      {b.available ? (
+                        <button className="btn-primary"
+                          style={{ width: '100%', padding: '11px', fontSize: 13, minHeight: 44 }}
+                          onClick={() => request(b.id, b.name)}
+                          disabled={requesting[b.id]}>
+                          {requesting[b.id] ? 'Sending...' : 'Request this buddy →'}
+                        </button>
+                      ) : (
+                        <div style={styles.busyBtn}>Currently Busy</div>
+                      )}
+                    </div>
                   </div>
                 </div>
               );
@@ -341,17 +361,22 @@ const styles = {
     boxShadow: 'var(--shadow-sm)',
     minWidth: 0,
     boxSizing: 'border-box',
+    overflow: 'hidden',
   },
   buddyGrid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
     gap: '1rem',
+    alignItems: 'start',
   },
   buddyCard: {
     padding: 0,
     overflow: 'hidden',
     border: '1px solid var(--border)',
     borderRadius: 16,
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
   },
   cardTop: {
     height: 84,
@@ -359,6 +384,7 @@ const styles = {
     display: 'flex',
     alignItems: 'flex-end',
     padding: '0 1.25rem 0',
+    flexShrink: 0,
   },
   avatar: {
     width: 54, height: 54,
@@ -382,6 +408,9 @@ const styles = {
   },
   cardBody: {
     padding: '1.75rem 1.25rem 1.25rem',
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
   },
   busyBtn: {
     width: '100%', padding: '11px',
@@ -390,6 +419,7 @@ const styles = {
     fontSize: 13, fontWeight: 600,
     color: 'var(--text-muted)',
     boxSizing: 'border-box',
+    marginTop: 'auto',
   },
   emptyState: {
     textAlign: 'center',
