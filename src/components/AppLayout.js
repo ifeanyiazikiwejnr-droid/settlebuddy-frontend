@@ -107,7 +107,7 @@ export default function AppLayout() {
 
         {/* Nav items */}
         <nav style={{ padding: '0.5rem 0.75rem', flex: 1, overflowY: 'auto' }}>
-          {navItems.map(item => {
+          {nav.map(item => {
             const active = location.pathname === item.path;
             return (
               <div key={item.path} onClick={() => handleNav(item.path)}

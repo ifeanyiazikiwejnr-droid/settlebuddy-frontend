@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
 export default function InstitutionDashboardPage() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -48,8 +48,15 @@ export default function InstitutionDashboardPage() {
       {/* Institution Header */}
       <div style={styles.header}>
         <div style={styles.headerBg} />
-        <div style={styles.headerContent}>
-          <div style={styles.institutionBadge}>🏫 Institution Dashboard</div>
+         <div style={styles.headerContent}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}>
+            <div style={styles.institutionBadge}>🏫 Institution Dashboard</div>
+            <button
+              onClick={() => { logout(); }}
+              style={{ background: 'rgba(255,255,255,0.15)', border: '1.5px solid rgba(255,255,255,0.4)', borderRadius: 50, padding: '6px 16px', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
+              Sign Out
+            </button>
+          </div>
           <h1 style={styles.institutionName}>{data.institution}</h1>
           <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: 14, marginTop: 4 }}>
             Settle-In Buddy — International Student Settlement Platform
