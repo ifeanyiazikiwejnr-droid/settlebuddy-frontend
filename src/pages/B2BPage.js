@@ -409,9 +409,11 @@ export default function B2BPage() {
                   }}>
                   Open Platform →
                 </a>
-                <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-                  Save your credentials — they won't be shown again. Questions? Email <strong>partners@settlebuddy.uk</strong>
-                </p>
+                  <div style={{ background: 'var(--green-light)', border: '1px solid #9FE1CB', borderRadius: 10, padding: '10px 12px', marginTop: 8 }}>
+                    <p style={{ fontSize: 12, color: 'var(--green)', lineHeight: 1.6, margin: 0 }}>
+                      💡 You will log in as an <strong>Institution User</strong> and see a dashboard scoped entirely to your university — with your students, your analytics and your content only. Save your credentials above as they won't be shown again.
+                    </p>
+                  </div>
               </div>
             ) : (
               <div style={{ background: '#fff', border: '1.5px solid var(--border)', borderRadius: 24, overflow: 'hidden', boxShadow: '0 8px 30px rgba(0,0,0,0.08)' }}>

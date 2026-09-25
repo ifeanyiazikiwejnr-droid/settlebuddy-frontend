@@ -45,8 +45,9 @@ export default function AppLayout() {
   const [toast, setToast] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const navItems = user?.role === 'buddy' ? buddyNav
-    : user?.role === 'admin' ? adminNav
+  const nav = user?.role === 'admin' ? adminNav
+    : user?.role === 'institution' ? []
+    : user?.role === 'buddy' ? buddyNav
     : studentNav;
 
   const showToast = (msg) => { setToast(msg); setTimeout(() => setToast(''), 3000); };

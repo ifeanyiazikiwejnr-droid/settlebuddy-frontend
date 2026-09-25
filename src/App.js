@@ -26,6 +26,7 @@ import AIAssistantPage from './pages/AIAssistantPage';
 import WellbeingPage from './pages/WellbeingPage';
 import CompliancePage from './pages/CompliancePage';
 import AnalyticsPage from './pages/AnalyticsPage';
+import InstitutionDashboardPage from './pages/InstitutionDashboardPage';
 import PartnersPage from './pages/PartnersPage';
 import CMSPage from './pages/CMSPage';
 import GraduateVisaPage from './pages/GraduateVisaPage';
@@ -44,6 +45,7 @@ function ProtectedRoute({ children }) {
   if (loading) return <div style={{ padding: '2rem', color: 'var(--text-muted)' }}>Loading...</div>;
   if (!user) return <Navigate to="/landing" replace />;
   if (user.role === 'buddy' && user.verified === false) return <PendingApprovalPage />;
+  if (user.role === 'institution') return <InstitutionDashboardPage />;
   return children;
 }
 
